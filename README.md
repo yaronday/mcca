@@ -1,14 +1,50 @@
 # Max Connected Colors Analyzer (MCCA) v1.0.0
 
 Max Connected Colors Analyzer (MCCA) is a C++ console application designed to solve and analyze connected regions of color codes within a grid or matrix.  
-It offers flexibility in choosing different algorithms (DFS, Union-Find) and provides visualizations and random matrix file generation options for further analysis.  
+It offers flexibility in choosing different algorithms (DFS, Union-Find) and provides visualizations (for UF) and random matrix file generation options for further analysis.  
 
 This README provides instructions on how to use MCCA and its available features.  
+
+
+## Introduction
+
+The problem addressed by MCCA is known in computer science by various terms, including:
+
+- **Max Connected Colors**
+- **Connected Components in a Graph**
+- **Connected Cells in a Grid**
+- **Region Connectivity Analysis**
+- **Largest Connected Subgraph (Matrix Representation)**
+
+This type of analysis is widely used in graph theory, image processing, and pattern recognition, making MCCA a versatile tool for both research and practical applications.
+
+
+## Target Audience
+
+MCCA is designed for a diverse group of users, including:
+
+1. **Software Engineers and Developers**  
+   Professionals working with graph algorithms or needing tools for solving connected components problems in matrix/grid representations.
+
+2. **Data Scientists and Algorithm Enthusiasts**  
+   Individuals exploring algorithmic solutions like DFS or Union-Find in data analysis or real-world problem-solving.
+
+3. **Educators and Students**  
+   - Educators teaching graph theory, algorithms, or data structures.
+   - Students seeking practical tools to enhance their understanding of connected components and matrix-based graph problems.
+
+4. **Researchers and Analysts**  
+   Researchers in computer science domains such as image processing, pattern recognition, or graph theory.  
+   Analysts using the matrix generation feature for custom simulations or experiments.
+
+5. **Hobbyists and Open-Source Contributors**  
+   Those interested in exploring, modifying, or contributing to open-source algorithm-focused projects.
+
 
 ## Features
 
 - Analyze max connected color regions in a grid (matrix).
-- Support for three graph algorithms: DFS, Union-Find, or both.
+- Support for 2 algorithms: DFS, Union-Find (using path compression).
 - Visualization of Union-Find Root using Graphviz.
 - Option to paint regions or save results as a matrix file.
 - Matrix file generator for creating random or customized matrices.
@@ -52,6 +88,8 @@ This feature is limited by design to small matrices (maximum dimensions of VIS_M
 
 **--ver**: Display title & version. 
 
+**Note**: unlike in Filegen, overwrite is permanently enabled here.
+
 Usage Example:  
 
         MCCA --root_dir C:/MCCA/Data/matrix_shapes --paint --algo dfs
@@ -88,10 +126,10 @@ Usage Examples:
         MCCA filegen --sqmat --minrows 4000 --maxrows 5000 --row_inc 500 --ext "csv"
 
 
-Requirements:  
-Compiler: A C++20-compatible compiler (e.g., GCC, Clang, MSVC).  
-Graphviz: For visualizing Union-Find roots (optional).  
-Operating System: Windows (cross-platform support might be considered in the future).  
+**Requirements**:  
+**Compiler**: A C++20-compatible compiler (e.g., GCC, Clang, MSVC).  
+**Graphviz**: For visualizing Union-Find roots (optional).  
+**Operating System**: Windows (cross-platform support might be considered in the future).  
 
 ## Contributing: 
 - Fork the repository.
