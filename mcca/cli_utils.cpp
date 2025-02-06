@@ -53,12 +53,12 @@ void mainMenuDisplay() {
         << "  --confirm           : Automatically confirm saving files to disk.\n"
         << "  --ovr               : Enable overwrite.\n"
         << "  --csv               : Save csv files (otherwise: txt, space separated).\n"
-        << "  --minrows <min_rows>: min_rows <= " << ROWS_MAX << ".\n"
-        << "  --maxrows <max_rows>: max_rows <= " << ROWS_MAX << ".\n"
-        << "  --row_inc <row_inc> : row_inc <= " << INC_MAX << ".\n"
-        << "  --mincols <min_cols>: min_cols <= " << ROWS_MIN << ".\n"
-        << "  --maxcols <max_cols>: max_cols <= " << ROWS_MAX << ".\n"
-        << "  --col_inc <col_inc> : col_inc <= " << INC_MAX << ".\n"
+        << "  --minrows <min_rows>: " << ROWS_MIN << " <= min_rows <= " << ROWS_MAX << ".\n"
+        << "  --maxrows <max_rows>: " << ROWS_MIN << " <= max_rows <= " << ROWS_MAX << ".\n"
+        << "  --row_inc <row_inc> : " << INC_MIN << " <= row_inc  <= " << INC_MAX << ".\n"
+        << "  --mincols <min_cols>: " << ROWS_MIN << " <= min_cols <= " << ROWS_MAX << ".\n"
+        << "  --maxcols <max_cols>: " << ROWS_MIN << " <= max_cols <= " << ROWS_MAX << ".\n"
+        << "  --col_inc <col_inc> : " << INC_MIN << " <= col_inc  <= " << INC_MAX << ".\n"
         << "  --minv <min_v>      : min_v " << withinRange(MIN_VAL, MAX_VAL) << ".\n"
         << "  --maxv <max_v>      : max_v " << withinRange(MIN_VAL, MAX_VAL) << ".\n";
     formatTxt("  Note: --sqmat cannot be used with column parameters.\n", LIGHT_YELLOW);

@@ -1,4 +1,4 @@
-# Max Connected Colors Analyzer (MCCA) v1.0.0
+# Max Connected Colors Analyzer (MCCA) v1.1.1
 
 Max Connected Colors Analyzer (MCCA) is a C++ console application designed to solve and analyze connected regions of color codes within a grid or matrix.  
 It offers flexibility in choosing different algorithms (DFS, Union-Find) and provides visualizations (for UF) and random matrix file generation options for further analysis.  
@@ -107,12 +107,12 @@ Options:
 **--sqmat**: Generate square matrix files, skipping column-related parameters.  
 **--confirm**: Automatically confirm saving files to disk.  
 **--ext <ext>**: Specify the file extension for saved matrices (e.g., csv).  
-**--minrows <min_rows>**: min_rows <= 10000. 
-**--maxrows <max_rows>**: max_rows <= 10000.  
-**--row_inc <row_inc>**: row_inc <= 9999.  
-**--mincols <min_cols>**: min_cols <= 1. 
-**--maxcols <max_cols>**: max_cols <= 10000. 
-**--col_inc <col_inc>**: col_inc <= 9999.  
+**--minrows <min_rows>**: 1 <= min_rows <= 15000. 
+**--maxrows <max_rows>**: 1 <= max_rows <= 15000.  
+**--row_inc <row_inc>**:  1 <= row_inc  <= 14999.  
+**--mincols <min_cols>**: 1 <= min_cols <= 15000.
+**--maxcols <max_cols>**: 1 <= max_cols <= 15000. 
+**--col_inc <col_inc>**:  1 <= col_inc  <= 14999.  
 **--minv <min_v>**: min_v within [1, 9]. 
 **--maxv <max_v>**: max_v within [1, 9]. 
 

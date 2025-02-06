@@ -124,12 +124,12 @@ int UnionFindColorGrid::calcMaxConnectedColor(vector<vector<int>> &mat,
     return maxSize;
 }
 
-void UnionFindColorGrid::visualizeUF(const UnionFind &uf,
+void UnionFindColorGrid::visualizeUF(UnionFind &uf,
                                      int maxSize,
                                      const unordered_set<int> &maxColorSet,
                                      const unordered_map<int, unordered_set<int>> &colorRegionsMap,
                                      const string &filename,
-                                     bool show) const {
+                                     bool show){
     // Prerequisites: Graphviz, configured as system env variable.
     ostringstream filepath;
 
@@ -231,7 +231,7 @@ void UnionFindColorGrid::processAdjCells(int row, int col,
 
 //For --crop option (only write each bounding box of equally-sized max region to separate file)
 void UnionFindColorGrid::fWriteCropped(const string &filename,
-                                       const UnionFind &uf,
+                                       UnionFind &uf,
                                        vector<vector<int>> &mat,
                                        int n, int m,
                                        const function<bool(int, int)> &cellCondition,
