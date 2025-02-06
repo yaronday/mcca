@@ -19,9 +19,12 @@
 
 #include "Headers/union_find.hpp"
 
-int UnionFind::find(int x) const {
+int UnionFind::find(int x) {
     // path compression 
-    return (parent[x] != x) ? find(parent[x]) : parent[x];
+    if (parent[x] != x) {
+        parent[x] = find(parent[x]);
+    }
+    return parent[x];
 }
 
 UnionFind::UnionFind(int n) {

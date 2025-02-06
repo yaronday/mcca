@@ -29,7 +29,7 @@ public:
     vector<int> size;
 
     UnionFind(int n);
-    int find(int x) const;
+    int find(int x);
     void unite(int x, int y);
     int getSize(int x);
 };

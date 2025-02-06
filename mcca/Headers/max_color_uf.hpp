@@ -60,12 +60,12 @@ protected:
     unordered_set<int> maxColorSet;  // Specific to UnionFindColorGrid (for O(1) color code lookup)
     unordered_map<int, unordered_set<int>> colorRegionsMap;  // Specific to UnionFindColorGrid (to track regions of each color code)
 
-    void visualizeUF(const UnionFind& uf,
-        int maxSize,
-        const unordered_set<int>& maxColorSet,
-        const unordered_map<int, unordered_set<int>> &colorRegionsMap,
-        const string &filename = "uf_tree.png",
-        bool show = false) const;
+    void visualizeUF(UnionFind &uf,
+                     int maxSize,
+                     const unordered_set<int>& maxColorSet,
+                     const unordered_map<int, unordered_set<int>> &colorRegionsMap,
+                     const string &filename = "uf_tree.png",
+                     bool show = false);
 
     const char *getRegionColor(int root, const unordered_map<int, unordered_set<int>> &colorRegionsMap) const;
 
@@ -84,7 +84,7 @@ protected:
 
     //For --crop option (only write each bounding box of equally-sized max region to separate file)
     void fWriteCropped(const string &filename,
-                       const UnionFind &uf,
+                       UnionFind &uf,
                        vector<vector<int>> &mat,
                        int n, int m,
                        const function<bool(int, int)> &cellCondition,
