@@ -51,7 +51,7 @@ int DfsColorGrid::calcMaxConnectedColor(vector<vector<int>> &mat,
                 curr_max = dfs(mat, currValue, row, col, checked, curr_xy_coord_list);
                 if (maxSize < curr_max) {
                     maxSize = curr_max;
-                    xy_coord_list = move(curr_xy_coord_list);
+                    xy_coord_list = std::move(curr_xy_coord_list);
                     maxColor = currValue;
                 }
             }
@@ -107,10 +107,9 @@ int DfsColorGrid::dfs(vector<vector<int>> &mat, int curr_value,
     checked[row][col] = true;
     coord_list.emplace_back(row, col);
     int res = 1;
-    int new_row, new_col;
     for (int i = 0; i < dr.size(); i++) {
-        new_row = row + dr[i];
-        new_col = col + dc[i];
+        int new_row = row + dr[i];
+        int new_col = col + dc[i];
         res += dfs(mat, curr_value, new_row, new_col, checked, coord_list);
     }
     return res;

@@ -80,7 +80,7 @@ template <typename T>
 inline string to_str_w_precision(const T val, const int prec = 2) {
     ostringstream out;
     out << fixed << setprecision(prec) << val;
-    return move(out).str();
+    return std::move(out).str();
 }
 
 // generic for extracting a vector from an arbitrary container 

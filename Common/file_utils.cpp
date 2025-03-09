@@ -81,7 +81,7 @@ void fWrite(const string &contents,
             const string &filepath,
             const string &info, 
             bool overwrite) {
-    if (contents == "")
+    if (contents.empty())
         return;
     fHandleInfo(filepath, info, overwrite);
     ofstream file(filepath);
@@ -94,7 +94,7 @@ void fWrite(const string &contents,
 }
 
 //Write to file directly from buffer 
-void fWrite(vector <char> buffer,
+void fWrite(const vector <char> &buffer,
             const string &filepath,
             const string &info, 
             bool overwrite) {

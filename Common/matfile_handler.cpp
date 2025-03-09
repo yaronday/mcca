@@ -17,8 +17,6 @@
  * The original author, Yaron Dayan, must be credited in all derivative works.
  */
 
-#pragma once
-
 #include "Headers/matfile_handler.hpp"
 
 using namespace MyCommon;
@@ -175,14 +173,14 @@ vector<vector<int>> MatFileHandler::parseMat(const string &matrixStr) {
     vector<vector<int>> matrix;
     string rowToken;
     bool isFirstRow = true;
-    size_t strLength = matrixStr.length();
+    const size_t strLength = matrixStr.length();
 
     if (strLength < 3) {
         handleError(ErrCode::EMPTY_STR, ErrorContext());
         return { { 0 } };
     }
 
-    string trimmedString = matrixStr.substr(1, strLength - 2);
+    const string trimmedString = matrixStr.substr(1, strLength - 2);
 
     if (trimmedString.empty()) {
         handleError(ErrCode::EMPTY_STR, ErrorContext());
@@ -196,10 +194,9 @@ vector<vector<int>> MatFileHandler::parseMat(const string &matrixStr) {
     while (getline(matrixStream, rowToken, '}')) {
         if (!rowToken.empty()) {
             delimFix(rowToken, "{},");
-            vector<int> row = validateRow(rowToken);
-            if (row[0] != -1) {
+            if (vector<int> row = validateRow(rowToken); row[0] != -1) {
                 if (isFirstRow) {
-                    matrix.emplace_back(move(row));
+                    matrix.emplace_back(std::move(row));
                     isFirstRow = false;
                     row_len = matrix[0].size();
                 }
@@ -209,7 +206,7 @@ vector<vector<int>> MatFileHandler::parseMat(const string &matrixStr) {
                         handleError(ErrCode::ROW_LEN_MISMATCH, ErrorContext());
                         return { { 0 } };
                     }
-                    matrix.emplace_back(move(row));
+                    matrix.emplace_back(std::move(row));
                 }
             }
             else {
@@ -224,11 +221,11 @@ vector<vector<int>> MatFileHandler::parseMat(const string &matrixStr) {
 vector<vector<vector<int>>> MatFileHandler::parseMatrices(const string &matricesStr) {
     vector<vector<vector<int>>> matrices;
     istringstream matricesStream(matricesStr);
-    for (string matStr : strSplit(matricesStr)) {
+    for (const string &matStr : strSplit(matricesStr)) {
         if (matStr != " ") {
-            currMat = move(parseMat(matStr));
+            currMat = std::move(parseMat(matStr));
             if (!currMat.empty() && currMat[0][0]) {
-                matrices.emplace_back(move(currMat));
+                matrices.emplace_back(std::move(currMat));
             }
             else // fail right after the first invalid matrix / substring
                 exit(1);
@@ -349,7 +346,7 @@ bool MatFileHandler::matLoader(vector<vector<int>> &matrix, const string &filepa
 
         if (!row.empty()) {
             if (isFirstRow) {
-                matrix.emplace_back(move(row));
+                matrix.emplace_back(std::move(row));
                 isFirstRow = false;
                 row_len = matrix[0].size();
             }
@@ -358,7 +355,7 @@ bool MatFileHandler::matLoader(vector<vector<int>> &matrix, const string &filepa
                     handleError(ErrCode::ROW_LEN_MISMATCH, row_cnt);
                     return false;
                 }
-                matrix.emplace_back(move(row));
+                matrix.emplace_back(std::move(row));
             }
         }
 
@@ -399,7 +396,7 @@ vector<pair<string, vector<vector<int>>>> MatFileHandler::fLoadMatrices() {
             success = matLoader(mat, filepath);
             cout << endl;
             if (!mat.empty() && success) {
-                files.emplace_back(filepath, move(mat));
+                files.emplace_back(filepath, std::move(mat));
             }
         }
     }

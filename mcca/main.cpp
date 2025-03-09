@@ -29,15 +29,14 @@ int main(int argc, char *argv[]) {
     bool visualizer = false;
     bool crop = false;
 
-    string algoChoice = "";
+    string algoChoice;
 
     signal(SIGINT, handleSignal);
 
     MatFileHandler mfh;
 
-    string matStr = "";
-    vector<vector<vector<int>>> matList;
-   
+    string matStr;
+
     DfsColorGrid dfsCG(mfh);
     UnionFindColorGrid ufCG(mfh);
 
@@ -52,6 +51,7 @@ int main(int argc, char *argv[]) {
         processData(algoChoice, dfsCG, ufCG, mfh,
                     paint, colors, crop, visualizer);
     else{
+        vector<vector<vector<int>>> matList;
         mfh.overwrite = true;
         matList = mfh.parseMatrices(matStr);
         for (vector<vector<int>> &mat : matList) {
@@ -88,12 +88,12 @@ void processData(const string &algoChoice,
                  bool visualizer) {
 
     vector<pair<string, vector<vector<int>>>> data = mfh.fLoadMatrices();
-    int num_of_matrices = static_cast<int>(data.size());
+    const int num_of_matrices = static_cast<int>(data.size());
     if (num_of_matrices > 0) {
         formatTxt("Processing Data...\n", LIGHT_CYAN);
         for (int k = 0; k < num_of_matrices; k++) {
-            string filepath = move(data[k].first);
-            mfh.currMat = move(data[k].second);      
+            string filepath = data[k].first;
+            mfh.currMat = std::move(data[k].second);
             ostringstream oss;
             oss << "\n" << k + 1 << ")" << filepath << "\n";
             formatTxt(oss, LIGHT_CYAN);

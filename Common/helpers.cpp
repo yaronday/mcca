@@ -194,9 +194,8 @@ void handleDiskSpace(double totalSize, const double maxSize) {
         exit(0);
     }
 
-    string space_required = "";
     formatTxt("Required space = ", LIGHT_YELLOW, "");
-    space_required = (totalSizeGB >= 1) ? to_str_w_precision(totalSizeGB) + " GB" :
+    const string space_required = (totalSizeGB >= 1) ? to_str_w_precision(totalSizeGB) + " GB" :
         (totalSizeMB >= 1) ? to_str_w_precision(totalSizeMB) + " MB" :
         (totalSizeKB >= 1) ? to_str_w_precision(totalSizeKB) + " KB" :
         to_string(static_cast<int>(totalSize)) + " Bytes";

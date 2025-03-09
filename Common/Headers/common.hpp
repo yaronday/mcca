@@ -30,10 +30,17 @@
 using namespace std;
 
 namespace MyCommon {
+
+#ifdef _WIN32
     
     #include <Windows.h>
-  
     extern HANDLE handle;
+
+#elif __APPLE__
+
+    #include <unistd.h>  // For POSIX signal handling on macOS
+
+#endif
     
     void resetConsoleColor();
 

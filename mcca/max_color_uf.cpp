@@ -129,7 +129,7 @@ void UnionFindColorGrid::visualizeUF(UnionFind &uf,
                                      const unordered_set<int> &maxColorSet,
                                      const unordered_map<int, unordered_set<int>> &colorRegionsMap,
                                      const string &filename,
-                                     bool show){
+                                     bool show) {
     // Prerequisites: Graphviz, configured as system env variable.
     ostringstream filepath;
 

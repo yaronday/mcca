@@ -54,7 +54,7 @@ void fWrite(const string &contents,
 	        bool overwrite = EN_OVR);
 
 //Write to file directly from buffer 
-void fWrite(vector <char> buffer,    
+void fWrite(const vector <char> &buffer,
 		    const string &filepath,
 	        const string &info = DEFAULT_INFO,
 	        bool overwrite = EN_OVR);
