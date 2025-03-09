@@ -486,3 +486,4 @@ dkms.conf
 /Data/Debug
 /Data/*/*out*
 
+/build
