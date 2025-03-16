@@ -62,8 +62,6 @@ protected:
 
     void visualizeUF(UnionFind &uf,
                      int maxSize,
-                     const unordered_set<int>& maxColorSet,
-                     const unordered_map<int, unordered_set<int>> &colorRegionsMap,
                      const string &filename = "uf_tree.png",
                      bool show = false);
 

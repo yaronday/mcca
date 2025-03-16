@@ -76,7 +76,7 @@ int UnionFindColorGrid::calcMaxConnectedColor(vector<vector<int>> &mat,
             ostringstream oss;
             oss << "Visualizer activated!\n";
             formatTxt(oss, LIGHT_MAGENTA);
-            visualizeUF(uf, maxSize, maxColorSet, colorRegionsMap, filename);
+            visualizeUF(uf, maxSize, filename);
         }
         else
             formatTxt(getErrMsg(ErrCode::GRAPHVIZ_MAT_LIMIT, ErrorContext()), LIGHT_MAGENTA);
@@ -106,8 +106,8 @@ int UnionFindColorGrid::calcMaxConnectedColor(vector<vector<int>> &mat,
                          );
         }
         else {
-            const string filepath = updatePath(filename, maxSize, maxColor, algo);
-            fWriteAll(filepath,
+            const string fpath = updatePath(filename, maxSize, maxColor, algo);
+            fWriteAll(fpath,
                       n, m,
                       cellCond,
                       getCellValue
@@ -126,8 +126,6 @@ int UnionFindColorGrid::calcMaxConnectedColor(vector<vector<int>> &mat,
 
 void UnionFindColorGrid::visualizeUF(UnionFind &uf,
                                      int maxSize,
-                                     const unordered_set<int> &maxColorSet,
-                                     const unordered_map<int, unordered_set<int>> &colorRegionsMap,
                                      const string &filename,
                                      bool show) {
     // Prerequisites: Graphviz, configured as system env variable.
