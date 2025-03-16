@@ -27,7 +27,7 @@
 using namespace std;
 
 
-inline static const string withinRange(const int &minv, const int &maxv);
+static const string withinRange(const int &minv, const int &maxv);
 
 // Enum for error codes
 enum class ErrCode {
@@ -313,7 +313,7 @@ inline string getErrMsg(ErrCode code, const ErrorContext &context) {
 }
 
 //valid range notifier
-inline static const string withinRange(const int &minv, const int &maxv) {
+static const string withinRange(const int &minv, const int &maxv) {
     ostringstream val_range;
     val_range << "within [" << minv << ", " << maxv << "]";
     return val_range.str();
