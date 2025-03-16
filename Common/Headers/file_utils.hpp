@@ -21,8 +21,6 @@
 
 #include <filesystem>
 #include <fstream>
-#include <cstdlib>
-
 #include "common.hpp"
 
 using namespace std;

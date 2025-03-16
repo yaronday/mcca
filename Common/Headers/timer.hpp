@@ -20,14 +20,13 @@
 #pragma once
 
 #include <iostream>
-#include <chrono>
 #include <string>
 
 using namespace std;
 using namespace chrono;
 
 // Function to scale and format the time measurement
-pair<double, string> time_scaler(double time_res) {
+inline pair<double, string> time_scaler(double time_res) {
     string time_unit = " [s]";
     if (time_res < 0.5 && time_res > 1e-3) {
         time_res *= 1e3;

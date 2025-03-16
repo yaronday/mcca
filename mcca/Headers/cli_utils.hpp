@@ -21,7 +21,6 @@
 
 #include <map>
 #include <unordered_set>
-#include <algorithm>
 
 #include "../../Common/Headers/matfile_handler.hpp"
 

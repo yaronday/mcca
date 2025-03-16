@@ -20,7 +20,6 @@
 #pragma once 
 
 #include <random>
-#include <cmath>
 
 #include "common.hpp"
 
@@ -41,8 +40,6 @@ bool isNumeric(const string &);
 int evalNum(size_t idx, vector<char> &buff);
 
 bool isWithinRange(const int &, int, int);
-
-bool isValidStr(const string &);
 
 string removeSpaces(const string &);
 
