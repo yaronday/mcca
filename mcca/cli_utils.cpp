@@ -40,7 +40,7 @@ void mainMenuDisplay() {
     formatTxt("  --help or /? : Display this help menu.", LIGHT_MAGENTA);
     formatTxt("  --cond       : Display conditions.", LIGHT_MAGENTA);
     formatTxt("  --ver        : Display title and version.\n", LIGHT_MAGENTA);
-    formatTxt("  Note: unlike Filegen, overwrite is permanently enabled for this operation.\n", LIGHT_YELLOW);
+    formatTxt("  Note: unlike in Filegen, overwrite is permanently enabled for this operation.\n", LIGHT_YELLOW);
     formatTxt("Example: mcca --root_dir C:/MCCA/Data/matrix_shapes --paint --algo dfs\n", LIGHT_GREEN);
     formatTxt("Example: mcca --root_dir ../data/multicolor --visualizer --crop --algo both\n", LIGHT_GREEN);
     formatTxt("Matrix Files Generator:", LIGHT_CYAN);
