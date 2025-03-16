@@ -1,4 +1,4 @@
-# Max Connected Colors Analyzer (MCCA) v2.1.2
+# Max Connected Colors Analyzer (MCCA) v2.1.3
 
 Max Connected Colors Analyzer (MCCA) is a C++ console application designed to solve and analyze connected regions of color codes within a grid or matrix.  
 It offers flexibility in choosing different algorithms (DFS, Union-Find) and provides visualizations (for UF) and random matrix file generation options for further analysis.  
