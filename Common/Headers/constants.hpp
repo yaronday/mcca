@@ -21,7 +21,7 @@
 
 // title & version
 inline constexpr char COPYRIGHT[] = "\nCopyright (C) Yaron Dayan 2025\n";
-inline constexpr char VERSION[] = "v2.1.3";
+inline constexpr char VERSION[] = "v2.2.0";
 inline constexpr char TITLE[] = "Max Connected Colors Analyzer (MCCA) ";
 
 // misc
@@ -30,7 +30,7 @@ inline constexpr char DEFAULT_INFO[] = "file";
 inline constexpr int VIS_MAT_THR = 15;
 
 // io 
-inline constexpr char DEFAULT_ROOTDIR[] = "../Data/matrix_shapes";
+inline constexpr char DEFAULT_ROOTDIR[] = "../data/default_matrices";
 inline constexpr bool EN_TXT = true;
 inline constexpr bool EN_OVR = false;
 inline constexpr bool EN_CONFIRM = false;

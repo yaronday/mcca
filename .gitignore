@@ -487,3 +487,5 @@ dkms.conf
 /Data/*/*out*
 
 /build
+/build_msvc
+/mcca/out

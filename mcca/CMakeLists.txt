@@ -1,7 +1,13 @@
-cmake_minimum_required(VERSION 3.30.5)
+cmake_minimum_required(VERSION 3.29.5)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    #windows specific code
+    set(CMAKE_CXX_FLAGS_RELEASE "/O2")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    #Clang specific code
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+endif()
 
 project(mcca)
 
@@ -16,6 +22,7 @@ add_executable(mcca
     max_color_dfs.cpp
     max_color_uf.cpp
     union_find.cpp
+	Resource.rc
 )
 
 target_include_directories(mcca PRIVATE Common/Headers MaxConnectedColorsInGrid/Headers)

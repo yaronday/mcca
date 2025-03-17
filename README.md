@@ -1,4 +1,4 @@
-# Max Connected Colors Analyzer (MCCA) v2.1.3
+# Max Connected Colors Analyzer (MCCA) v2.2.0
 
 Max Connected Colors Analyzer (MCCA) is a C++ console application designed to solve and analyze connected regions of color codes within a grid or matrix.  
 It offers flexibility in choosing different algorithms (DFS, Union-Find) and provides visualizations (for UF) and random matrix file generation options for further analysis.  
@@ -138,6 +138,20 @@ Usage Examples:
 - Commit and push your changes.
 - Create a pull request with a description of the changes.
 
+### Note:
+This project is being shared for educational and informational purposes. 
+Due to time constraints, I may have limited availability for responding to issues or pull requests. 
+Contributions are appreciated, but timely responses cannot be guaranteed. 
+This software is provided "as is" without any warranty.
+
+Pull requests are welcome, but I reserve the right to accept or decline them based on my availability and priorities.
+
+By contributing to this project, you agree to the terms of the **GNU General Public License v3.0**.
+
+**Attribution**: 
+* When contributing code or making modifications, ensure that the original author, **Yaron Dayan**, is clearly credited in the appropriate sections of the codebase.
+
+
 ## License and Attribution
 
 This project is licensed under the GNU General Public License v3.0 (GPLv3).
@@ -146,10 +160,3 @@ This project is licensed under the GNU General Public License v3.0 (GPLv3).
 * The original author, **Yaron Dayan**, must be credited in all derivative works, modifications, or redistributions of this software.
 
 For more details, refer to the full text of the GPLv3 [here](https://www.gnu.org/licenses/gpl-3.0.html).
-
-## Contributing
-
-By contributing to this project, you agree to the terms of the **GNU General Public License v3.0**.
-
-**Attribution**: 
-* When contributing code or making modifications, ensure that the original author, **Yaron Dayan**, is clearly credited in the appropriate sections of the codebase.
