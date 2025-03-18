@@ -20,7 +20,7 @@
 #pragma warning(push)
 #pragma warning(disable : 26495)  // Disable uninitialized variable warning (which occured despite a proper init within base class)
 
-#include "Headers/max_color_dfs.hpp"
+#include "headers/max_color_dfs.hpp"
 
 DfsColorGrid::DfsColorGrid(MatFileHandler &handler) : ColorGrid(handler) {}
 

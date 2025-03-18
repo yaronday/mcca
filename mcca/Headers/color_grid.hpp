@@ -24,8 +24,8 @@
 #include <unordered_set>
 #include <functional>
 
-#include "../../Common/Headers/matfile_handler.hpp"
-#include "../../Common/Headers/helpers.hpp"
+#include "../../common/headers/matfile_handler.hpp"
+#include "../../common/headers/helpers.hpp"
 
 using namespace std;
 

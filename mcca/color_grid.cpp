@@ -17,7 +17,7 @@
  * The original author, Yaron Dayan, must be credited in all derivative works.
  */
 
-#include "Headers/color_grid.hpp"
+#include "headers/color_grid.hpp"
 
 ColorGrid::ColorGrid(MatFileHandler &handler):
     mfh(handler), n(1), m(1), maxSize(1), maxColor(1),

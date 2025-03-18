@@ -17,8 +17,8 @@
  * The original author, Yaron Dayan, must be credited in all derivative works.
  */
 
-#include "Headers/file_utils.hpp"
-#include "Headers/common.hpp"
+#include "headers/file_utils.hpp"
+#include "headers/common.hpp"
 
 
 // calc directory size except for file names specified by filenameFilter

@@ -20,7 +20,7 @@
 #pragma warning(push)
 #pragma warning(disable : 26495)  // Disable uninitialized variable warning (which occured despite a proper init within base class)
 
-#include "Headers/max_color_uf.hpp"
+#include "headers/max_color_uf.hpp"
 
 UnionFindColorGrid::UnionFindColorGrid(MatFileHandler &handler) : ColorGrid(handler) {
     maxColorSet.clear();       // track max color codes

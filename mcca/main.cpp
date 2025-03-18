@@ -17,8 +17,8 @@
  * The original author, Yaron Dayan, must be credited in all derivative works.
  */
 
-#include "Headers/main.hpp"
-#include "../Common/Headers/timer.hpp"
+#include "headers/main.hpp"
+#include "../common/headers/timer.hpp"
 
 using namespace std;
 

@@ -32,7 +32,7 @@ using namespace std;
 namespace MyCommon {
 
 #ifdef _WIN32
-    
+
     #include <Windows.h>
     extern HANDLE handle;
 

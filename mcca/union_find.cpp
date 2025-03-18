@@ -17,7 +17,7 @@
  * The original author, Yaron Dayan, must be credited in all derivative works.
  */
 
-#include "Headers/union_find.hpp"
+#include "headers/union_find.hpp"
 
 int UnionFind::find(int x) {
     // path compression 

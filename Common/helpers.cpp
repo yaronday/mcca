@@ -17,8 +17,8 @@
  * The original author, Yaron Dayan, must be credited in all derivative works.
  */
 
-#include "Headers/helpers.hpp"
-#include "Headers/common.hpp"
+#include "headers/helpers.hpp"
+#include "headers/common.hpp"
 
 using namespace MyCommon;
 
