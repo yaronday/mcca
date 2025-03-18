@@ -90,7 +90,7 @@ void processData(const string &algoChoice,
     vector<pair<string, vector<vector<int>>>> data = mfh.fLoadMatrices();
     const int num_of_matrices = static_cast<int>(data.size());
     if (num_of_matrices > 0) {
-        formatTxt("Processing Data...\n", LIGHT_CYAN);
+        formatTxt("Processing data...\n", LIGHT_CYAN);
         for (int k = 0; k < num_of_matrices; k++) {
             string filepath = data[k].first;
             mfh.currMat = std::move(data[k].second);

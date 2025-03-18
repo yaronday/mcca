@@ -483,8 +483,8 @@ dkms.conf
 *.out
 *.app
 
-/Data/Debug
-/Data/*/*out*
+/data/Debug
+/data/*/*out*
 
 /build
 /build_msvc

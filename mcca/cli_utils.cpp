@@ -41,7 +41,7 @@ void mainMenuDisplay() {
     formatTxt("  --cond       : Display conditions.", LIGHT_MAGENTA);
     formatTxt("  --ver        : Display title and version.\n", LIGHT_MAGENTA);
     formatTxt("  Note: unlike in Filegen, overwrite is permanently enabled for this operation.\n", LIGHT_YELLOW);
-    formatTxt("Example: mcca --root_dir C:/MCCA/Data/matrix_shapes --paint --algo dfs\n", LIGHT_GREEN);
+    formatTxt("Example: mcca --root_dir C:/MCCA/data/default_matrices --paint --algo dfs\n", LIGHT_GREEN);
     formatTxt("Example: mcca --root_dir ../data/multicolor --visualizer --crop --algo both\n", LIGHT_GREEN);
     formatTxt("Matrix Files Generator:", LIGHT_CYAN);
     cout << "Usage: mcca filegen [--sqmat] [--confirm] [--ovr] [--root_dir <rootDir>] [--csv]\n"

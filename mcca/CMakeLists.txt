@@ -11,10 +11,10 @@ endif()
 project(mcca)
 
 add_executable(mcca
-    ../common/common.cpp
-    ../common/file_utils.cpp
-    ../common/helpers.cpp
-    ../common/matfile_handler.cpp
+        ../common/common.cpp
+        ../common/file_utils.cpp
+        ../common/helpers.cpp
+        ../common/matfile_handler.cpp
     cli_utils.cpp
     color_grid.cpp
     main.cpp
