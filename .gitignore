@@ -486,6 +486,6 @@ dkms.conf
 /data/Debug
 /data/*/*out*
 
-/build
+/build*
 /build_msvc
 /mcca/out
