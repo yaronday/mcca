@@ -4,6 +4,7 @@ OS=$(uname -s)
 WINSTR="MINGW64_NT-10.0*"
 PROJ_NAME="mcca"
 TARGET_PATH="/mcca_local/mcca_build"
+STATIC_BINS="static_binaries"
 CONFIG_TYPE="Release"
 
 WIN=$([[ "$OS" == $WINSTR ]] && echo "true" || echo "false")
@@ -18,7 +19,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --help)
       echo "Usage: $0 [--config <config_type>] [--clean] [target_dir]"
-	  echo "config_types: Release; Debug; RelWithDebInfo; MinSizeRel"
+      echo "config_types: Release; Debug; RelWithDebInfo; MinSizeRel"
       exit 0
       ;;
     --clean)
@@ -68,6 +69,11 @@ if [[ "$WIN" == "true" ]]; then
   if [[ -f "$CONFIG_TYPE/$PROJ_NAME.exe" ]]; then
     mkdir -p "$(cygpath -u "$TARGET_DIR")"
     cp "$CONFIG_TYPE/$PROJ_NAME.exe" "$(cygpath -u "$TARGET_DIR")/$PROJ_NAME.exe"
+
+    if [[ ! -d "../$STATIC_BINS" ]]; then
+      mkdir "../$STATIC_BINS"
+    fi
+    cp "$CONFIG_TYPE/$PROJ_NAME.exe" "../$STATIC_BINS/$PROJ_NAME.exe"
   else
     echo "Error: $PROJ_NAME.exe not found in $CONFIG_TYPE directory."
   fi
@@ -75,6 +81,12 @@ elif [[ "$OS" == "Darwin" ]]; then
   if [[ -f "$PROJ_NAME" ]]; then
     mkdir -p "$TARGET_DIR"
     cp "$PROJ_NAME" "$TARGET_DIR/$PROJ_NAME"
+
+    if [[ ! -d "../$STATIC_BINS" ]]; then
+      mkdir "../$STATIC_BINS"
+    fi
+    cp "$PROJ_NAME" "../$STATIC_BINS/$PROJ_NAME"
+
   else
     echo "Error: $PROJ_NAME executable not found in current directory."
   fi
