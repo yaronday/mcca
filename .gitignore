@@ -487,5 +487,6 @@ dkms.conf
 /data/*/*out*
 
 /build*
-/build_
 /mcca/out
+
+!static_binaries/*.exe
