@@ -44,12 +44,12 @@ void mainMenuDisplay() {
     formatTxt("Example: mcca --root_dir C:/MCCA/data/default_matrices --paint --algo dfs\n", LIGHT_GREEN);
     formatTxt("Example: mcca --root_dir ../data/multicolor --visualizer --crop --algo both\n", LIGHT_GREEN);
     formatTxt("Matrix Files Generator:", LIGHT_CYAN);
-    cout << "Usage: mcca filegen [--sqmat] [--confirm] [--ovr] [--root_dir <rootDir>] [--csv]\n"
+    cout << "Usage: mcca filegen [--square] [--confirm] [--ovr] [--root_dir <rootDir>] [--csv]\n"
         << "                    [--minrows <min_rows>] [--maxrows <max_rows>] [--row_inc <row_inc>]\n"
         << "                    [--mincols <min_cols>] [--maxcols <max_cols>] [--col_inc <col_inc>] \n"
         << "                    [--minv <min_v>][--maxv <max_v>]\n"
         << "  --root_dir          : Destination directory for storing the generated files.\n"
-        << "  --sqmat             : Generate square matrix files, skipping column-related parameters.\n"
+        << "  --square            : Generate square matrix files, skipping column-related parameters.\n"
         << "  --confirm           : Automatically confirm saving files to disk.\n"
         << "  --ovr               : Enable overwrite.\n"
         << "  --csv               : Save csv files (otherwise: txt, space separated).\n"
@@ -61,9 +61,9 @@ void mainMenuDisplay() {
         << "  --col_inc <col_inc> : col_inc <= " << INC_MAX << ".\n"
         << "  --minv <min_v>      : min_v " << withinRange(MIN_VAL, MAX_VAL) << ".\n"
         << "  --maxv <max_v>      : max_v " << withinRange(MIN_VAL, MAX_VAL) << ".\n";
-    formatTxt("  Note: --sqmat cannot be used with column parameters.\n", LIGHT_YELLOW);
+    formatTxt("  Note: --square cannot be used with column parameters.\n", LIGHT_YELLOW);
     formatTxt("Examples: mcca filegen --maxrows 750 --maxcols 400 --inc_col 20\n", LIGHT_GREEN);
-    formatTxt("          mcca filegen --sqmat --minrows 4000 --maxrows 5000 --row_inc 500 --csv \n", LIGHT_GREEN);
+    formatTxt("          mcca filegen --square --minrows 4000 --maxrows 5000 --row_inc 500 --csv \n", LIGHT_GREEN);
 }
 
 void handleArgs(int argc, char *argv[], 
@@ -100,7 +100,7 @@ void handleArgs(int argc, char *argv[],
                                 
     unordered_set<string> standalone_flags = { "--help", "/?", "--paint", "--no_color", "--csv",
                                                "--crop", "--visualizer", "filegen", "--cond",
-                                               "--sqmat", "--confirm", "--ovr", "--ver"};
+                                               "--square", "--confirm", "--ovr", "--ver"};
 
     // Parse the arguments and map them
     for (int i = 1; i < argc; ++i) {
@@ -206,7 +206,7 @@ void handleArgs(int argc, char *argv[],
             skip_algo_handler = true;
         }
 
-        if (arg == "--sqmat") {
+        if (arg == "--square") {
             mfh.sqmat = true;
         }
 
@@ -290,7 +290,7 @@ void handleArgs(int argc, char *argv[],
         if (mfh.sqmat) {
             for (const auto &col_flag : fg_col_param_flags) {
                 if (!args_map[col_flag].empty()) {
-                    formatTxt("Error: column params cannot be used with --sqmat.", LIGHT_RED);
+                    formatTxt("Error: column params cannot be used with --square.", LIGHT_RED);
                     exit(1);
                 }
             }

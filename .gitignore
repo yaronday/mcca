@@ -489,4 +489,4 @@ dkms.conf
 /build*
 /mcca/out
 
-!static_binaries/*.exe
+!static_binaries/*.*

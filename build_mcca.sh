@@ -2,8 +2,9 @@
 
 OS=$(uname -s)
 WINSTR="MINGW64_NT-10.0*"
-PROJ_NAME="mcca"
 BUILD_DIR="build"
+PROJ_NAME="mcca"
+EXE_MAC="${PROJ_NAME}_mac"
 TARGET_PATH="/mcca_local/mcca_$BUILD_DIR"
 STATIC_BINS="static_binaries"
 CONFIG_TYPE="Release"
@@ -18,7 +19,7 @@ fi
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --help)
+    --help|"/?")
       echo "Usage: $0 [--config <config_type>] [--clean] [target_dir]"
       echo "	config_types: Release; Debug; RelWithDebInfo; MinSizeRel"
       exit 0
@@ -36,6 +37,10 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     *)
+	  if [[ "$1" == -* ]]; then
+	    echo "Unknown option: $1" >&2
+        exit 1
+      fi
       TARGET_DIR="$1"
       shift
       ;;
@@ -51,7 +56,7 @@ cd $BUILD_DIR
 if [[ "$WIN" == "true" ]]; then
   cmake "../$PROJ_NAME"
 elif [[ "$OS" == "Darwin" ]]; then
-  cmake -DCMAKE_BUILD_TYPE="$CONFIG_TYPE" "../$PROJ_NAME"
+  cmake -DCMAKE_BUILD_TYPE="$CONFIG_TYPE" "../$EXE_MAC"
 else
   echo "Unsupported operating system: $OS"
   exit 1
@@ -84,12 +89,12 @@ if [[ "$WIN" == "true" ]]; then
 elif [[ "$OS" == "Darwin" ]]; then
   if [[ -f "$PROJ_NAME" ]]; then
     mkdir -p "$TARGET_DIR"
-    cp "$PROJ_NAME" "$TARGET_DIR/$PROJ_NAME"
+    cp "$PROJ_NAME" "$TARGET_DIR/$EXE_MAC"
 
     if [[ ! -d "../$STATIC_BINS" ]]; then
       mkdir "../$STATIC_BINS"
     fi
-    cp "$PROJ_NAME" "../$STATIC_BINS/$PROJ_NAME"
+    cp "$PROJ_NAME" "../$STATIC_BINS/$EXE_MAC"
 
   else
     echo "Error: $PROJ_NAME executable not found in current directory."
