@@ -3,7 +3,8 @@
 OS=$(uname -s)
 WINSTR="MINGW64_NT-10.0*"
 PROJ_NAME="mcca"
-TARGET_PATH="/mcca_local/mcca_build"
+BUILD_DIR="build"
+TARGET_PATH="/mcca_local/mcca_$BUILD_DIR"
 STATIC_BINS="static_binaries"
 CONFIG_TYPE="Release"
 
@@ -19,11 +20,14 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --help)
       echo "Usage: $0 [--config <config_type>] [--clean] [target_dir]"
-      echo "config_types: Release; Debug; RelWithDebInfo; MinSizeRel"
+      echo "	config_types: Release; Debug; RelWithDebInfo; MinSizeRel"
       exit 0
       ;;
     --clean)
-      rm -rf build_
+	  if [[ ! -d "$BUILD_DIR" ]]; then
+	    echo "$BUILD_DIR cleared already"
+	  fi
+      rm -rf $BUILD_DIR
       exit 0
       ;;
     --config)
@@ -38,11 +42,11 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ ! -d "build_" ]]; then
-  mkdir build_
+if [[ ! -d "$BUILD_DIR" ]]; then
+  mkdir $BUILD_DIR
 fi
 
-cd build_
+cd $BUILD_DIR
 
 if [[ "$WIN" == "true" ]]; then
   cmake "../$PROJ_NAME"

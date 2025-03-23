@@ -58,12 +58,17 @@ inline void showConditions() {
 	title_and_ver();
 	ostringstream oss;
 	oss << "\n"
-		<< "You may copy, modify, and redistribute this program under the terms of the GNU General Public License, version 3.0.\n"
-		<< "The license requires that:\n"
-		<< "- You include a copy of the GPLv3 license with the program, or provide access to it.\n"
-		<< "- Any modified versions of this program must also be distributed under the GPLv3.\n"
-		<< "- You must make the source code of the program available if you distribute it(or provide an offer to provide the source code).\n"
-		<< "- **You must provide proper attribution to Yaron Dayan as specified in the ATTRIBUTION.md file when redistributing or using the program.**\n"
-		<< "For more details, see the full text of the GNU General Public License version 3.0.\n";	
+		<< "You may copy, modify, and redistribute this program under the terms of the GNU\n"
+		<< "General Public License, version 3.0. The license requires that:\n"
+		<< "- You include a copy of the GPLv3 license with the program, or provide\n"
+		<< "  access to it.\n"
+		<< "- Any modified versions of this program must also be distributed under\n" 
+		<< "  the GPLv3.\n"
+		<< "- You must make the source code of the program available if you distribute it\n"
+		<< "  (or provide an offer to provide the source code).\n"
+		<< "- **You must provide proper attribution to Yaron Dayan as specified in the\n"
+		<< "  ATTRIBUTION.md file when redistributing or using the program.** \n"
+		<< "  For more details, see the full text of the GNU General Public License\n"
+		<< "  version 3.0.\n";	
 	formatTxt(oss, LIGHT_CYAN);
 }

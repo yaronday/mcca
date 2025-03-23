@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{cd49c525-48b6-4d97-bacc-0bd3c9bb5989}</ProjectGuid>
-    <RootNamespace>mcca</RootNamespace>
+    <ProjectGuid>{3fc4de95-77ed-4610-8a03-09401dfcbc60}</ProjectGuid>
+    <RootNamespace>mccavs</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -104,6 +104,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,41 +131,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\common\common.cpp" />
-    <ClCompile Include="..\..\common\file_utils.cpp" />
-    <ClCompile Include="..\..\common\helpers.cpp" />
-    <ClCompile Include="..\..\common\matfile_handler.cpp" />
-    <ClCompile Include="..\cli_utils.cpp" />
-    <ClCompile Include="..\color_grid.cpp" />
-    <ClCompile Include="..\main.cpp" />
-    <ClCompile Include="..\max_color_dfs.cpp" />
-    <ClCompile Include="..\max_color_uf.cpp" />
-    <ClCompile Include="..\union_find.cpp" />
+    <ClInclude Include="..\common\headers\colors.hpp" />
+    <ClInclude Include="..\common\headers\common.hpp" />
+    <ClInclude Include="..\common\headers\constants.hpp" />
+    <ClInclude Include="..\common\headers\error_handler.hpp" />
+    <ClInclude Include="..\common\headers\file_utils.hpp" />
+    <ClInclude Include="..\common\headers\helpers.hpp" />
+    <ClInclude Include="..\common\headers\matfile_handler.hpp" />
+    <ClInclude Include="..\common\headers\timer.hpp" />
+    <ClInclude Include="..\mcca\headers\cli_utils.hpp" />
+    <ClInclude Include="..\mcca\headers\color_grid.hpp" />
+    <ClInclude Include="..\mcca\headers\main.hpp" />
+    <ClInclude Include="..\mcca\headers\max_color_dfs.hpp" />
+    <ClInclude Include="..\mcca\headers\max_color_uf.hpp" />
+    <ClInclude Include="..\mcca\headers\union_find.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\common\headers\colors.hpp" />
-    <ClInclude Include="..\..\common\headers\common.hpp" />
-    <ClInclude Include="..\..\common\headers\constants.hpp" />
-    <ClInclude Include="..\..\common\headers\error_handler.hpp" />
-    <ClInclude Include="..\..\common\headers\file_utils.hpp" />
-    <ClInclude Include="..\..\common\headers\helpers.hpp" />
-    <ClInclude Include="..\..\common\headers\matfile_handler.hpp" />
-    <ClInclude Include="..\..\common\headers\timer.hpp" />
-    <ClInclude Include="..\headers\cli_utils.hpp" />
-    <ClInclude Include="..\headers\color_grid.hpp" />
-    <ClInclude Include="..\headers\main.hpp" />
-    <ClInclude Include="..\headers\max_color_dfs.hpp" />
-    <ClInclude Include="..\headers\max_color_uf.hpp" />
-    <ClInclude Include="..\headers\union_find.hpp" />
+    <Image Include="..\mcca\mcca.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\mcca.ico" />
+    <None Include="..\mcca\Resource.aps" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource.aps" />
+    <ResourceCompile Include="..\mcca\Resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\Resource.rc" />
+    <ClCompile Include="..\common\common.cpp" />
+    <ClCompile Include="..\common\file_utils.cpp" />
+    <ClCompile Include="..\common\helpers.cpp" />
+    <ClCompile Include="..\common\matfile_handler.cpp" />
+    <ClCompile Include="..\mcca\cli_utils.cpp" />
+    <ClCompile Include="..\mcca\color_grid.cpp" />
+    <ClCompile Include="..\mcca\main.cpp" />
+    <ClCompile Include="..\mcca\max_color_dfs.cpp" />
+    <ClCompile Include="..\mcca\max_color_uf.cpp" />
+    <ClCompile Include="..\mcca\union_find.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
