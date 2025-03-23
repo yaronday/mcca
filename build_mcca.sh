@@ -56,7 +56,7 @@ cd $BUILD_DIR
 if [[ "$WIN" == "true" ]]; then
   cmake "../$PROJ_NAME"
 elif [[ "$OS" == "Darwin" ]]; then
-  cmake -DCMAKE_BUILD_TYPE="$CONFIG_TYPE" "../$EXE_MAC"
+  cmake -DCMAKE_BUILD_TYPE="$CONFIG_TYPE" "../$PROJ_NAME"
 else
   echo "Unsupported operating system: $OS"
   exit 1
