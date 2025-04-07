@@ -171,12 +171,30 @@ void UnionFindColorGrid::visualizeUF(UnionFind &uf,
     // Render an image from a dot file
     ostringstream render_cmd;
     render_cmd << "dot -T" << ext << " \"" << dotFilePathStr << "\" -o \"" << outFilePathStr << "\"";
-    system(render_cmd.str().c_str());
+    string renderCmd = render_cmd.str();
+    try {
+        if (system(renderCmd.c_str()) ) {
+            throw runtime_error("Render command failed - \n" + renderCmd);
+        }
+    }
+    catch (const exception &e) {
+        handleError(ErrCode::GENERIC_EXCEPTION, e);
+        exit(1);
+    }
 
     if (show) {
         ostringstream open_cmd;
         open_cmd << "start \"\" \"" << outFilePathStr << "\"";
-        system(open_cmd.str().c_str());
+        string openCmd = open_cmd.str();
+        try { 
+            if (system(openCmd.c_str())) {
+                throw runtime_error("Failed to execute start command: " + string(openCmd));
+            }
+        }
+        catch (const exception &e) {
+            handleError(ErrCode::GENERIC_EXCEPTION, e);
+            exit(1);
+        }
     }
 }
 
