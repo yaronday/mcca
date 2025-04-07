@@ -27,7 +27,7 @@ inline constexpr char TITLE[] = "Max Connected Colors Analyzer (MCCA) ";
 // misc
 inline constexpr char MATSTR[] = R"({{1, 2, 1}, {2, 3, 2}, {1, 2, 1}}, {{1, 2, 1}, {2, 1, 2}, {1, 2, 3}})";
 inline constexpr char DEFAULT_INFO[] = "file";
-inline constexpr int VIS_MAT_THR = 15;
+inline constexpr int VIS_MAT_THR = 50;
 
 // io 
 inline constexpr char DEFAULT_ROOTDIR[] = "../data/multicolor";

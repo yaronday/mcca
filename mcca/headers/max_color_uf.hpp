@@ -62,7 +62,8 @@ protected:
 
     void visualizeUF(UnionFind &uf,
                      int maxSize,
-                     const string &filename = "uf_tree.png",
+                     const string &filename,
+                     const string &ext = "svg",
                      bool show = false);
 
     const char *getRegionColor(int root, const unordered_map<int, unordered_set<int>> &colorRegionsMap) const;
