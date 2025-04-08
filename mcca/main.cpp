@@ -26,10 +26,7 @@ using namespace std;
 int main(int argc, char *argv[]) {  
     bool paint = false;
     bool colors = true;
-    bool visualizer = false;
     bool crop = false;
-
-    string algoChoice;
 
     signal(SIGINT, handleSignal);
 
@@ -40,16 +37,15 @@ int main(int argc, char *argv[]) {
     DfsColorGrid dfsCG(mfh);
     UnionFindColorGrid ufCG(mfh);
 
-    handleArgs(argc, argv, matStr, mfh,
-               algoChoice, paint, colors, crop, visualizer);  // Parse CLI arguments
+    handleArgs(argc, argv, matStr, mfh, paint, colors, crop, ufCG);  // Parse CLI arguments
 
-    algoNotifier(algoChoice);
+    algoNotifier(ufCG);
 
-    visualizerNotifier(algoChoice, visualizer);
+    visualizerNotifier(ufCG);
 
     if (matStr.empty())
-        processData(algoChoice, dfsCG, ufCG, mfh,
-                    paint, colors, crop, visualizer);
+        processData(dfsCG, ufCG, mfh,
+                    paint, colors, crop);
     else{
         vector<vector<vector<int>>> matList;
         mfh.overwrite = true;
@@ -57,36 +53,34 @@ int main(int argc, char *argv[]) {
         for (vector<vector<int>> &mat : matList) {
             mfh.currMat = mat; 
             mfh.parsedMatIdx++;
-            solveMccg(algoChoice, dfsCG, ufCG, mfh.currMat, 
-                      paint, colors, crop, visualizer);     
+            solveMccg(dfsCG, ufCG, mfh.currMat, 
+                      paint, colors, crop);     
             mfh.fWriteMat(mfh.filename, true);
         }
     }
     return 0;
 }
 
-void solveMccg(const string &algoChoice, DfsColorGrid &dfsCG,
+void solveMccg(DfsColorGrid &dfsCG,
                UnionFindColorGrid &ufCG,
                vector<vector<int>> &mat,
                bool &paint,
-               bool &colors, bool crop, bool visualizer,
+               bool &colors, bool crop,
                const string &filepath) {
 
-    if (algoChoice == "DFS" || algoChoice == "BOTH") {
+    const string& algo = ufCG.algo;
+    if (algo == "DFS" || algo == "BOTH") {
         dfsCG.calcMaxConnectedColor(mat, paint, colors, filepath, crop);
     }
-    if (algoChoice == "UF" || algoChoice == "BOTH") {
-        ufCG.calcMaxConnectedColor(mat, paint, colors, filepath, crop, visualizer);
+    if (algo == "UF" || algo == "BOTH") {
+        ufCG.calcMaxConnectedColor(mat, paint, colors, filepath, crop);
     }
 }
 
-void processData(const string &algoChoice,
-                 DfsColorGrid &dfsCG, 
+void processData(DfsColorGrid &dfsCG, 
                  UnionFindColorGrid &ufCG,
                  MatFileHandler &mfh,
-                 bool &paint, bool &colors, bool crop,
-                 bool visualizer) {
-
+                 bool &paint, bool &colors, bool crop) {
     vector<pair<string, vector<vector<int>>>> data = mfh.fLoadMatrices();
     const int num_of_matrices = static_cast<int>(data.size());
     if (num_of_matrices > 0) {
@@ -97,8 +91,8 @@ void processData(const string &algoChoice,
             ostringstream oss;
             oss << "\n" << k + 1 << ")" << filepath << "\n";
             formatTxt(oss, LIGHT_CYAN);
-            solveMccg(algoChoice, dfsCG, ufCG, mfh.currMat,
-                paint, colors, crop, visualizer, filepath);
+            solveMccg(dfsCG, ufCG, mfh.currMat,
+                      paint, colors, crop, filepath);
         }
     }
 }

@@ -25,6 +25,9 @@
 UnionFindColorGrid::UnionFindColorGrid(MatFileHandler &handler) : ColorGrid(handler) {
     maxColorSet.clear();       // track max color codes
     colorRegionsMap.clear();  // track regions for each color
+    visualizerEn = false;
+    imageFormat = "svg";
+    algo = "UF"; 
 }
 
 int UnionFindColorGrid::calcMaxConnectedColor() {
@@ -34,8 +37,7 @@ int UnionFindColorGrid::calcMaxConnectedColor() {
 int UnionFindColorGrid::calcMaxConnectedColor(vector<vector<int>> &mat,
                                               bool paint, bool colors,
                                               const string &filepath,
-                                              bool crop,
-                                              bool visualizerEn) {
+                                              bool crop) {
     init(mat);
 
     UnionFind uf(n * m);
@@ -127,7 +129,6 @@ int UnionFindColorGrid::calcMaxConnectedColor(vector<vector<int>> &mat,
 void UnionFindColorGrid::visualizeUF(UnionFind &uf,
                                      int maxSize,
                                      const string &filename,
-                                     const string &ext,
                                      bool show) {
     // Prerequisites: Graphviz, configured as system env variable.
 
@@ -137,7 +138,7 @@ void UnionFindColorGrid::visualizeUF(UnionFind &uf,
 
     string filePathStr = filePath.str();
 
-    outFilePath << filePathStr << "_UFtree." << ext; 
+    outFilePath << filePathStr << "_UFtree." << imageFormat; 
 
     dotFilePath << filePathStr + "_UFtree.dot";
 
@@ -170,7 +171,7 @@ void UnionFindColorGrid::visualizeUF(UnionFind &uf,
 
     // Render an image from a dot file
     ostringstream render_cmd;
-    render_cmd << "dot -T" << ext << " \"" << dotFilePathStr << "\" -o \"" << outFilePathStr << "\"";
+    render_cmd << "dot -T" << imageFormat << " \"" << dotFilePathStr << "\" -o \"" << outFilePathStr << "\"";
     string renderCmd = render_cmd.str();
     try {
         if (system(renderCmd.c_str()) ) {
