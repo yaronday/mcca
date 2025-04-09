@@ -74,7 +74,7 @@ If neither **--paint** nor **--no_color** is specified, results will be saved un
 **--matrix [matString]**: Specify matrices (C/C++ format) as a string.  
 Values allowed: integers within [1, 9]. 
         
-        Example: **--matrix "{{1, 2, 1}, {2, 3, 2}, {1, 2, 1}}"**  
+        Example: **--matrix "{{1, 2, 1}, {2, 3, 2}, {1, 2, 1}}" --paint**  
          
 **--visualizer**: Enable the Union-Find Root visualizer.  
 This feature is limited by design to small matrices (maximum dimensions of VIS_MAT_THR).  
@@ -93,6 +93,7 @@ This feature is limited by design to small matrices (maximum dimensions of VIS_M
 Usage Example:  
 
         MCCA --root_dir C:/MCCA/Data/matrix_shapes --paint --algo dfs
+		mcca --paint --root_dir ../data/multicolor --visualizer svg
 
 ### Matrix Files Generator:  
 Usage:   

@@ -30,7 +30,7 @@ inline constexpr char DEFAULT_INFO[] = "file";
 
 // visualizer config
 inline constexpr int VIS_MAT_THR = 50;
-inline constexpr char VIS_IMAGE_FORMATS[] = "svg, png, jpeg, jpg, gif, tif, tiff, bmp, fig, json, pdf";
+inline constexpr char VIS_IMAGE_FORMATS[] = "svg, svgz, png, jpeg, jpg, gif, tif, tiff, bmp, fig, json, pdf";
 
 // io 
 inline constexpr char DEFAULT_ROOTDIR[] = "../data/multicolor";

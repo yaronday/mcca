@@ -102,7 +102,7 @@ void handleArgs(int argc, char *argv[],
                                                "--crop", "filegen", "--cond",
                                                "--square", "--confirm", "--ovr", "--ver"};
 
-    const unordered_set<string> supportedImageFormats = { "svg", "png", "jpeg", "jpg", "gif", "tif", "tiff", "bmp", "fig", "json", "pdf" };
+    static const auto supportedImageFormats = split2UnorderedSet(VIS_IMAGE_FORMATS);
 
     // Parse the arguments and map them
     for (int i = 1; i < argc; ++i) {
