@@ -92,6 +92,12 @@ namespace MyCommon {
         handleError(code, context);
     }
 
+    //IMAGE_FORMAT_ERR handler
+    void handleError(ErrCode code, const string &value, const string &arg) {
+        ErrorContext context(value, arg); 
+        handleError(code, context);
+    }
+
     //ROW_LEN_MISMATCH handler
     void handleError(ErrCode code, int row) {
         ErrorContext context(row);

@@ -62,6 +62,7 @@ enum class ErrCode {
     // Software items
     GRAPHVIZ_NA,
     GRAPHVIZ_MAT_LIMIT,
+    GRAPHVIZ_IMG_FORMAT_ERR,
 
     GENERIC_EXCEPTION
 };
@@ -73,6 +74,9 @@ struct ErrorContext {
     optional<char> invalidChar;
 	
     optional<int> invalidValue;
+    
+    optional<string> invalidStr; 
+
     optional<string> argName;
 
     optional<int> minValue;
@@ -107,6 +111,9 @@ struct ErrorContext {
     // constructor for filesize limit 
     ErrorContext(double filesize, double maxSize) : size(filesize), sizeLimit(maxSize) {}
 
+    // constructor for image format error
+    ErrorContext(string value, const string &arg) : invalidStr(value), argName(arg) {}
+
     // Constructor for exceptions
     ErrorContext(const exception &ex) : exceptionMsg(ex.what()) {}
 };
@@ -134,6 +141,7 @@ inline string getErrMsg(ErrCode code, const ErrorContext &context) {
     const string INV_CHAR_ERR = "Invalid character";
     const string GRAPHVIZ_NA_ERR = "The visualizer must have Graphviz installed and configured as system env variable";
     const string GRAPHVIZ_MAT_LIMIT_ERR = "Visualizer deactivated: Matrix max(m, n) > ";
+    const string GRAPHVIZ_IMG_FORMAT_ERR = "Invalid image format:";
 
     switch (code) {
         case ErrCode::INVALID_CHAR:
@@ -246,6 +254,20 @@ inline string getErrMsg(ErrCode code, const ErrorContext &context) {
         case ErrCode::GRAPHVIZ_MAT_LIMIT:      
             oss << GRAPHVIZ_MAT_LIMIT_ERR << VIS_MAT_THR << "!\n";
             break;
+
+        case ErrCode::GRAPHVIZ_IMG_FORMAT_ERR:
+            oss << GRAPHVIZ_IMG_FORMAT_ERR;
+            if (context.invalidStr && context.argName) {
+                oss << " '" << *context.invalidStr
+                    << "' for " << *context.argName;
+            }
+            else if (context.invalidStr) {
+                oss << " '" << *context.invalidStr;
+            }
+            oss << "!\n";
+            oss << "Please use one of these: " << VIS_IMAGE_FORMATS << ".\n";
+            break;
+
 
         // File related errors
         case ErrCode::FILE_OPEN_ERROR:

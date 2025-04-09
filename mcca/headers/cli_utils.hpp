@@ -21,8 +21,8 @@
 
 #include <map>
 #include <unordered_set>
-
 #include "../../common/headers/matfile_handler.hpp"
+#include "max_color_uf.hpp"
 
 using namespace std;
 
@@ -36,8 +36,9 @@ void cliErrHandler(bool menu_disp = false);
 
 void handleArgs(int argc, char *argv[], string &matStr, 
 	            MatFileHandler &mfh,
-	            string &algoChoice, bool & paint, bool &colors, 
-	            bool &crop, bool &visualizer);
+	            bool & paint, bool &colors, 
+	            bool &crop, 
+	            UnionFindColorGrid &ufCG);
 
 void validateAndAssign(int &variable, const string &arg, int min_value, 
 	                   int max_value, map<string, string> &args_map);
@@ -46,13 +47,13 @@ bool isFlag(const string &);
 
 bool isInvalidAlgoChoice(const string &algoChoice);
 
-void algoNotifier(const string &algo);
+void algoNotifier(UnionFindColorGrid &ufCG);
 
-void visualizerNotifier(const string &algo, bool &visualizer);
+void visualizerNotifier(UnionFindColorGrid &ufCG);
 
 void title_and_ver();
 
-void handleAlgoSelection(string &algo, const string &value= "uf");
+void handleAlgoSelection(UnionFindColorGrid &ufCG, const string &value= "uf");
 
 inline void showConditions() {
 	title_and_ver();

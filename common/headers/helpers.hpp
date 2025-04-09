@@ -21,6 +21,8 @@
 
 #include <random>
 
+#include <unordered_set>
+
 #include "common.hpp"
 
 using namespace std;
@@ -41,7 +43,7 @@ int evalNum(size_t idx, vector<char> &buff);
 
 bool isWithinRange(const int &, int, int);
 
-string removeSpaces(const string &);
+string removeSpaces(string_view);
 
 vector<string> strSplit(const string &);
 
@@ -50,6 +52,8 @@ vector<int> validateRow(const string &);
 void handleDiskSpace(double totalSize, const double maxSize);
 
 bool skipAction(const string &desc);
+
+unordered_set<string> split2UnorderedSet(string_view input, char delimiter = ',');
 
 // Generates random char value in range
 inline static char rndCharInRange(mt19937 &rng, char min_value, char max_value) {

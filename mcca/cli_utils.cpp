@@ -22,8 +22,8 @@
 void mainMenuDisplay() {
     title_and_ver();
     formatTxt("Main App:", LIGHT_CYAN);
-    cout << "Usage: MCCA [--help][/?][--ver][--cond][--paint] [--no_color][--crop][--visualizer]\n"
-        << "            [--root_dir <rootDir>][--algo <algo>][--matrix <matString>]\n"
+    cout << "Usage: MCCA [--help] [/?] [--ver] [--cond] [--paint] [--no_color] [--crop] [--visualizer <image_format>]\n"
+        << "            [--root_dir <rootDir>] [--algo <algo>] [--matrix <matString>]\n"
         << "Options:\n"
         << "  --algo       : Select graph algorithm: DFS, UF or BOTH.\n"
         << "  --paint      : Paint max connected color regions.\n"
@@ -36,13 +36,14 @@ void mainMenuDisplay() {
         << "  --visualizer : UnionFind Root visualizer. Limited by design choice to "
         << "small matrices with max(rows, cols) <= " << VIS_MAT_THR << ").\n"
         << "                 Graphviz must be installed and added to System Env. Path.\n"
+        << "                 image_format:" << VIS_IMAGE_FORMATS << ".\n"
         << "  --crop       : Save max regions (inc. their original coordinates) into files.\n";
     formatTxt("  --help or /? : Display this help menu.", LIGHT_MAGENTA);
     formatTxt("  --cond       : Display conditions.", LIGHT_MAGENTA);
     formatTxt("  --ver        : Display title and version.\n", LIGHT_MAGENTA);
     formatTxt("  Note: unlike in Filegen, overwrite is permanently enabled for this operation.\n", LIGHT_YELLOW);
     formatTxt("Example: mcca --root_dir C:/MCCA/data/default_matrices --paint --algo dfs\n", LIGHT_GREEN);
-    formatTxt("Example: mcca --root_dir ../data/multicolor --visualizer --crop --algo both\n", LIGHT_GREEN);
+    formatTxt("Example: mcca --root_dir ../data/multicolor --visualizer png --crop --algo both\n", LIGHT_GREEN);
     formatTxt("Matrix Files Generator:", LIGHT_CYAN);
     cout << "Usage: mcca filegen [--square] [--confirm] [--ovr] [--root_dir <rootDir>] [--csv]\n"
         << "                    [--minrows <min_rows>] [--maxrows <max_rows>] [--row_inc <row_inc>]\n"
@@ -69,9 +70,8 @@ void mainMenuDisplay() {
 void handleArgs(int argc, char *argv[], 
                 string &matStr, 
                 MatFileHandler &mfh,
-                string &algoChoice,  
                 bool &paint, bool &colors,
-                bool &crop, bool &visualizer) {
+                bool &crop, UnionFindColorGrid &ufCG) {
 
     int min_rows = DEFAULT_MIN_R;
     int max_rows = DEFAULT_MAX_R;
@@ -92,15 +92,17 @@ void handleArgs(int argc, char *argv[],
 
     unordered_set<string> fg_col_param_flags = { "--mincols", "--maxcols", "--col_inc" }; 
 
-    unordered_set<string> param_flags = { "--algo", "--root_dir", "--matrix",
+    unordered_set<string> param_flags = { "--algo", "--root_dir", "--matrix", "--visualizer",
                                           "--minrows", "--maxrows", "--row_inc", 
                                           "--minv", "--maxv"};
 
     param_flags.insert(fg_col_param_flags.begin(), fg_col_param_flags.end());
                                 
     unordered_set<string> standalone_flags = { "--help", "/?", "--paint", "--no_color", "--csv",
-                                               "--crop", "--visualizer", "filegen", "--cond",
+                                               "--crop", "filegen", "--cond",
                                                "--square", "--confirm", "--ovr", "--ver"};
+
+    static const auto supportedImageFormats = split2UnorderedSet(VIS_IMAGE_FORMATS);
 
     // Parse the arguments and map them
     for (int i = 1; i < argc; ++i) {
@@ -179,7 +181,7 @@ void handleArgs(int argc, char *argv[],
                 handleError(ErrCode::MISSING_ARG_VALUE, arg);
                 cliErrHandler();
             }       
-            handleAlgoSelection(algoChoice, value);
+            handleAlgoSelection(ufCG, value);
             algoSpecified = true;          
         }
 
@@ -192,8 +194,21 @@ void handleArgs(int argc, char *argv[],
         }
 
         if (arg == "--visualizer") {
+            if (value.empty()) {
+                handleError(ErrCode::MISSING_ARG_VALUE, arg);
+                cliErrHandler();
+            }
+           
+            if (supportedImageFormats.find(value) != supportedImageFormats.end()) {
+                ufCG.imageFormat = value;
+            }
+            else {
+                handleError(ErrCode::GRAPHVIZ_IMG_FORMAT_ERR, value, arg);
+                cliErrHandler();
+            }
+
             if (!system("dot -V >nul 2>&1")) {
-                visualizer = true;
+                ufCG.visualizerEn = true;
             }
             else {
                 handleError(ErrCode::GRAPHVIZ_NA, ErrorContext());
@@ -277,7 +292,7 @@ void handleArgs(int argc, char *argv[],
     }
 
     if (!algoSpecified && !skip_algo_handler)
-        handleAlgoSelection(algoChoice);
+        handleAlgoSelection(ufCG);
 
     createDir(mfh.destpath);
 
@@ -340,27 +355,29 @@ bool isInvalidAlgoChoice(const string &algoChoice) {
     return (algoChoice != "DFS" && algoChoice != "UF" && algoChoice != "BOTH");
 }
 
-void handleAlgoSelection(string &algo, const string &value) {
-    algo = strToUpper(value);
-    if (isInvalidAlgoChoice(algo)) {
+void handleAlgoSelection(UnionFindColorGrid &ufCG, const string &value) {
+    ufCG.algo = strToUpper(value);
+    if (isInvalidAlgoChoice(ufCG.algo)) {
         handleError(ErrCode::INVALID_ALGO_SELECTION, ErrorContext());
         cliErrHandler();
     }
 }
 
-void algoNotifier(const string &algo) {
+void algoNotifier(UnionFindColorGrid &ufCG) {
+    const string algo = ufCG.algo;
     string algorithmText = (algo == "BOTH") ? " algorithms were" : " algorithm was";
     ostringstream oss;
     oss << algo << algorithmText << " selected!\n";
     formatTxt(oss, LIGHT_GREEN);
 }
 
-void visualizerNotifier(const string &algo, bool &visualizerEnabled) {
-    if (visualizerEnabled){
+void visualizerNotifier(UnionFindColorGrid &ufCG) {
+    const string algo = ufCG.algo;
+    if (ufCG.visualizerEn){
         if (algo != "UF" && algo != "BOTH") {
             // warn the user 
             formatTxt("Disabling Visualizer since UF was not included.\n", LIGHT_YELLOW);
-            visualizerEnabled = false;
+            ufCG.visualizerEn = false;
         }
     }
 }
@@ -369,4 +386,4 @@ void title_and_ver() {
     ostringstream info;
     info << TITLE << VERSION << COPYRIGHT;
     formatTxt(info, LIGHT_CYAN);
-} 
+}

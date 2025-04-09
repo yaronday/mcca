@@ -23,13 +23,11 @@
 #include "max_color_uf.hpp"
 #include "max_color_dfs.hpp"
 
-void solveMccg(const string &algoChoice, DfsColorGrid &dfsCG, UnionFindColorGrid &ufCG,
+void solveMccg(DfsColorGrid &dfsCG, UnionFindColorGrid &ufCG,
                vector<vector<int>> &mat,
                bool &paint,
-               bool &colors, bool crop, bool visualizer, const string &filepath = "");
+               bool &colors, bool crop, const string &filepath = "");
 
-void processData(const string &algoChoice,
-                 DfsColorGrid &dfsCG, UnionFindColorGrid &ufCG,
+void processData(DfsColorGrid &dfsCG, UnionFindColorGrid &ufCG,
                  MatFileHandler &mfh,
-                 bool &paint, bool& colors, bool crop,
-                 bool visualizer);
+                 bool &paint, bool& colors, bool crop);

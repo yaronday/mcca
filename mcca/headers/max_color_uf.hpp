@@ -30,9 +30,14 @@ using namespace std;
 
 class UnionFindColorGrid : public ColorGrid {
 private:
-    const string algo = "UF";
+    
+
 
 public:
+    string algo;
+    bool visualizerEn;  // specific to UF 
+    string imageFormat; // for visualizer 
+
     // Hash function for pairs of integers
     struct hash_pair {
         template <class T1, class T2>
@@ -53,8 +58,7 @@ public:
                               bool paint = true,
                               bool colors = true,
                               const string &filepath = "", 
-                              bool crop = false,
-                              bool visualizerEn = false);
+                              bool crop = false);
 
 protected:
     unordered_set<int> maxColorSet;  // Specific to UnionFindColorGrid (for O(1) color code lookup)
@@ -62,7 +66,7 @@ protected:
 
     void visualizeUF(UnionFind &uf,
                      int maxSize,
-                     const string &filename = "uf_tree.png",
+                     const string &filename,
                      bool show = false);
 
     const char *getRegionColor(int root, const unordered_map<int, unordered_set<int>> &colorRegionsMap) const;

@@ -25,6 +25,9 @@
 UnionFindColorGrid::UnionFindColorGrid(MatFileHandler &handler) : ColorGrid(handler) {
     maxColorSet.clear();       // track max color codes
     colorRegionsMap.clear();  // track regions for each color
+    visualizerEn = false;
+    imageFormat = "svg";
+    algo = "UF"; 
 }
 
 int UnionFindColorGrid::calcMaxConnectedColor() {
@@ -34,8 +37,7 @@ int UnionFindColorGrid::calcMaxConnectedColor() {
 int UnionFindColorGrid::calcMaxConnectedColor(vector<vector<int>> &mat,
                                               bool paint, bool colors,
                                               const string &filepath,
-                                              bool crop,
-                                              bool visualizerEn) {
+                                              bool crop) {
     init(mat);
 
     UnionFind uf(n * m);
@@ -129,19 +131,27 @@ void UnionFindColorGrid::visualizeUF(UnionFind &uf,
                                      const string &filename,
                                      bool show) {
     // Prerequisites: Graphviz, configured as system env variable.
-    ostringstream filepath;
 
-    filepath << fRemoveExt(filename) << "_out_max" << maxSize << "_c" << maxColor;
+    ostringstream filePath, dotFilePath, outFilePath;
 
-    string dot_file_path = filepath.str() + "_UFtree.dot";
-    string png_file_path = filepath.str() + "_UFtree.png";
+    filePath << fRemoveExt(filename) << "_out_max" << maxSize << "_c" << maxColor;
 
-    ofstream dotFile(dot_file_path);
+    string filePathStr = filePath.str();
+
+    outFilePath << filePathStr << "_UFtree." << imageFormat; 
+
+    dotFilePath << filePathStr + "_UFtree.dot";
+
+    string dotFilePathStr = dotFilePath.str();
+
+    string outFilePathStr = outFilePath.str();
+
+    ofstream dotFile(dotFilePathStr);
     dotFile << "digraph UnionFindTree {\n";
 
     // Node attributes based on their color
     for (int i = 0; i < uf.parent.size(); ++i) {
-        int root = uf.find(i);  // Find root of each element
+        int root = uf.find(i);
         const char *color = getRegionColor(root, colorRegionsMap);
         const char *fontcolor = (!strcmp(color, "blue")) ? "white" : "black";
 
@@ -149,27 +159,43 @@ void UnionFindColorGrid::visualizeUF(UnionFind &uf,
                 << "\", fontcolor=\"" << fontcolor << "\"];\n";
     }
 
-    // Create edges for the union-find tree
     for (int i = 0; i < uf.parent.size(); ++i) {
-        int root = uf.find(i);  // Find the root of each element
+        int root = uf.find(i);
         if (root != i) {
-            dotFile << "    " << i << " -> " << root << ";\n";  // Add edge from node to its root
+            dotFile << "    " << i << " -> " << root << ";\n";
         }
     }
 
     dotFile << "}\n";
     dotFile.close();
 
-    // Render DOT file to a PNG using Graphviz
-    ostringstream cmd_line;
-    cmd_line << "dot -Tpng \"" << dot_file_path << "\" -o \"" << png_file_path << "\"";
-    system(cmd_line.str().c_str());
+    // Render an image from a dot file
+    ostringstream render_cmd;
+    render_cmd << "dot -T" << imageFormat << " \"" << dotFilePathStr << "\" -o \"" << outFilePathStr << "\"";
+    string renderCmd = render_cmd.str();
+    try {
+        if (system(renderCmd.c_str()) ) {
+            throw runtime_error("Render command failed - \n" + renderCmd);
+        }
+    }
+    catch (const exception &e) {
+        handleError(ErrCode::GENERIC_EXCEPTION, e);
+        exit(1);
+    }
 
     if (show) {
-        // Open PNG file for visualization
-        ostringstream open_cmd_line;
-        open_cmd_line << "start \"\" \"" << png_file_path << "\"";  // Empty quotes ensure proper command parsing
-        system(open_cmd_line.str().c_str());
+        ostringstream open_cmd;
+        open_cmd << "start \"\" \"" << outFilePathStr << "\"";
+        string openCmd = open_cmd.str();
+        try { 
+            if (system(openCmd.c_str())) {
+                throw runtime_error("Failed to execute start command: " + string(openCmd));
+            }
+        }
+        catch (const exception &e) {
+            handleError(ErrCode::GENERIC_EXCEPTION, e);
+            exit(1);
+        }
     }
 }
 

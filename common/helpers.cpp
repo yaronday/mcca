@@ -103,19 +103,43 @@ void delimFix(string &line, const string &delimiters, const char &replacer) {
     line.erase(0, line.find_first_not_of(" \t"));
     line.erase(line.find_last_not_of(" \t") + 1);
 
-    // Replace delimiters with spaces
-    for (char& ch : line) {
+    // Replace delimiters with replacer char
+    for (char &ch : line) {
         if (delimiters.find(ch) != string::npos) {
             ch = replacer;
         }
     }
 }
 
-string removeSpaces(const string &input) {
-    string result = input;
-    result.erase(remove_if(result.begin(), result.end(), [](unsigned char ch) {
-        return isspace(ch); // 'ch' is each character processed
-        }), result.end());
+string removeSpaces(string_view input) {
+    string result;
+    result.reserve(input.size());
+
+    for (char ch : input) {
+        if (!isspace(static_cast<unsigned char>(ch))) {
+            result += ch;
+        }
+    }
+    return result;
+}
+
+unordered_set<string> split2UnorderedSet(string_view input, char delimiter) {
+    // convert str to unordered_set
+
+    unordered_set<string> result;
+
+    size_t start = 0;
+    while (start < input.size()) {
+        size_t end = input.find(delimiter, start);
+        if (end == string_view::npos)
+            end = input.size();
+
+        string token = removeSpaces(input.substr(start, end - start));
+        if (!token.empty()) {
+            result.emplace(move(token));
+        }
+        start = end + 1;
+    }
     return result;
 }
 
