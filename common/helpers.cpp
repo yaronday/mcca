@@ -136,7 +136,7 @@ unordered_set<string> split2UnorderedSet(string_view input, char delimiter) {
 
         string token = removeSpaces(input.substr(start, end - start));
         if (!token.empty()) {
-            result.emplace(move(token));
+            result.emplace(std::move(token));
         }
         start = end + 1;
     }
