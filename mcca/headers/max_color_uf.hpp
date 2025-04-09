@@ -30,11 +30,10 @@ using namespace std;
 
 class UnionFindColorGrid : public ColorGrid {
 private:
-    
+    const string algo = "UF";
 
 
 public:
-    string algo;
     bool visualizerEn;  // specific to UF 
     string imageFormat; // for visualizer 
 

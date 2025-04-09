@@ -28,6 +28,10 @@ int main(int argc, char *argv[]) {
     bool colors = true;
     bool crop = false;
 
+    string algoChoice;
+
+    pair<bool, string> visConfig; 
+
     signal(SIGINT, handleSignal);
 
     MatFileHandler mfh;
@@ -37,14 +41,17 @@ int main(int argc, char *argv[]) {
     DfsColorGrid dfsCG(mfh);
     UnionFindColorGrid ufCG(mfh);
 
-    handleArgs(argc, argv, matStr, mfh, paint, colors, crop, ufCG);  // Parse CLI arguments
+    handleArgs(argc, argv, matStr, algoChoice, mfh, paint, colors, crop, visConfig);  // Parse CLI arguments
 
-    algoNotifier(ufCG);
+    ufCG.visualizerEn = visConfig.first; 
+    ufCG.imageFormat = visConfig.second;
 
-    visualizerNotifier(ufCG);
+    algoNotifier(algoChoice);
+
+    visualizerNotifier(algoChoice, visConfig.first);
 
     if (matStr.empty())
-        processData(dfsCG, ufCG, mfh,
+        processData(dfsCG, ufCG, mfh, algoChoice,
                     paint, colors, crop);
     else{
         vector<vector<vector<int>>> matList;
@@ -53,7 +60,7 @@ int main(int argc, char *argv[]) {
         for (vector<vector<int>> &mat : matList) {
             mfh.currMat = mat; 
             mfh.parsedMatIdx++;
-            solveMccg(dfsCG, ufCG, mfh.currMat, 
+            solveMccg(dfsCG, ufCG, mfh.currMat, algoChoice, 
                       paint, colors, crop);     
             mfh.fWriteMat(mfh.filename, true);
         }
@@ -64,11 +71,11 @@ int main(int argc, char *argv[]) {
 void solveMccg(DfsColorGrid &dfsCG,
                UnionFindColorGrid &ufCG,
                vector<vector<int>> &mat,
+               const string &algo,
                bool &paint,
                bool &colors, bool crop,
                const string &filepath) {
 
-    const string& algo = ufCG.algo;
     if (algo == "DFS" || algo == "BOTH") {
         dfsCG.calcMaxConnectedColor(mat, paint, colors, filepath, crop);
     }
@@ -80,7 +87,9 @@ void solveMccg(DfsColorGrid &dfsCG,
 void processData(DfsColorGrid &dfsCG, 
                  UnionFindColorGrid &ufCG,
                  MatFileHandler &mfh,
-                 bool &paint, bool &colors, bool crop) {
+                 const string &algo,
+                 bool &paint, bool &colors, 
+                 bool crop) {
     vector<pair<string, vector<vector<int>>>> data = mfh.fLoadMatrices();
     const int num_of_matrices = static_cast<int>(data.size());
     if (num_of_matrices > 0) {
@@ -91,7 +100,7 @@ void processData(DfsColorGrid &dfsCG,
             ostringstream oss;
             oss << "\n" << k + 1 << ")" << filepath << "\n";
             formatTxt(oss, LIGHT_CYAN);
-            solveMccg(dfsCG, ufCG, mfh.currMat,
+            solveMccg(dfsCG, ufCG, mfh.currMat, algo,
                       paint, colors, crop, filepath);
         }
     }

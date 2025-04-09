@@ -27,7 +27,6 @@ UnionFindColorGrid::UnionFindColorGrid(MatFileHandler &handler) : ColorGrid(hand
     colorRegionsMap.clear();  // track regions for each color
     visualizerEn = false;
     imageFormat = "svg";
-    algo = "UF"; 
 }
 
 int UnionFindColorGrid::calcMaxConnectedColor() {

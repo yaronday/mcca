@@ -69,9 +69,11 @@ void mainMenuDisplay() {
 
 void handleArgs(int argc, char *argv[], 
                 string &matStr, 
+                string &algoChoice,
                 MatFileHandler &mfh,
                 bool &paint, bool &colors,
-                bool &crop, UnionFindColorGrid &ufCG) {
+                bool &crop, 
+                pair<bool, string> &visConfig) {
 
     int min_rows = DEFAULT_MIN_R;
     int max_rows = DEFAULT_MAX_R;
@@ -181,7 +183,7 @@ void handleArgs(int argc, char *argv[],
                 handleError(ErrCode::MISSING_ARG_VALUE, arg);
                 cliErrHandler();
             }       
-            handleAlgoSelection(ufCG, value);
+            handleAlgoSelection(algoChoice, value);
             algoSpecified = true;          
         }
 
@@ -200,7 +202,7 @@ void handleArgs(int argc, char *argv[],
             }
            
             if (supportedImageFormats.find(value) != supportedImageFormats.end()) {
-                ufCG.imageFormat = value;
+                visConfig.second = value;
             }
             else {
                 handleError(ErrCode::GRAPHVIZ_IMG_FORMAT_ERR, value, arg);
@@ -208,7 +210,7 @@ void handleArgs(int argc, char *argv[],
             }
 
             if (!system("dot -V >nul 2>&1")) {
-                ufCG.visualizerEn = true;
+                visConfig.first = true;
             }
             else {
                 handleError(ErrCode::GRAPHVIZ_NA, ErrorContext());
@@ -292,7 +294,7 @@ void handleArgs(int argc, char *argv[],
     }
 
     if (!algoSpecified && !skip_algo_handler)
-        handleAlgoSelection(ufCG);
+        handleAlgoSelection(algoChoice);
 
     createDir(mfh.destpath);
 
@@ -355,29 +357,27 @@ bool isInvalidAlgoChoice(const string &algoChoice) {
     return (algoChoice != "DFS" && algoChoice != "UF" && algoChoice != "BOTH");
 }
 
-void handleAlgoSelection(UnionFindColorGrid &ufCG, const string &value) {
-    ufCG.algo = strToUpper(value);
-    if (isInvalidAlgoChoice(ufCG.algo)) {
+void handleAlgoSelection(string &algo, const string &value) {
+     algo = strToUpper(value);
+    if (isInvalidAlgoChoice(algo)) {
         handleError(ErrCode::INVALID_ALGO_SELECTION, ErrorContext());
         cliErrHandler();
     }
 }
 
-void algoNotifier(UnionFindColorGrid &ufCG) {
-    const string algo = ufCG.algo;
+void algoNotifier(const string &algo) {
     string algorithmText = (algo == "BOTH") ? " algorithms were" : " algorithm was";
     ostringstream oss;
     oss << algo << algorithmText << " selected!\n";
     formatTxt(oss, LIGHT_GREEN);
 }
 
-void visualizerNotifier(UnionFindColorGrid &ufCG) {
-    const string algo = ufCG.algo;
-    if (ufCG.visualizerEn){
+void visualizerNotifier(const string &algo, bool &visEnable) {
+    if (visEnable){
         if (algo != "UF" && algo != "BOTH") {
             // warn the user 
             formatTxt("Disabling Visualizer since UF was not included.\n", LIGHT_YELLOW);
-            ufCG.visualizerEn = false;
+            visEnable = false;
         }
     }
 }

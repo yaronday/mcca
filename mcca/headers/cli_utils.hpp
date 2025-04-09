@@ -34,11 +34,13 @@ void mainMenuDisplay();
 
 void cliErrHandler(bool menu_disp = false);
 
-void handleArgs(int argc, char *argv[], string &matStr, 
+void handleArgs(int argc, char *argv[], 
+	            string &matStr, 
+			    string &algoChoice,
 	            MatFileHandler &mfh,
 	            bool & paint, bool &colors, 
 	            bool &crop, 
-	            UnionFindColorGrid &ufCG);
+				pair<bool, string> &visConfig);
 
 void validateAndAssign(int &variable, const string &arg, int min_value, 
 	                   int max_value, map<string, string> &args_map);
@@ -47,13 +49,13 @@ bool isFlag(const string &);
 
 bool isInvalidAlgoChoice(const string &algoChoice);
 
-void algoNotifier(UnionFindColorGrid &ufCG);
+void algoNotifier(const string &algo);
 
-void visualizerNotifier(UnionFindColorGrid &ufCG);
+void visualizerNotifier(const string &algo, bool &visEnable);
 
 void title_and_ver();
 
-void handleAlgoSelection(UnionFindColorGrid &ufCG, const string &value= "uf");
+void handleAlgoSelection(string &algo, const string &value= "uf");
 
 inline void showConditions() {
 	title_and_ver();
