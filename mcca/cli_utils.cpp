@@ -22,8 +22,8 @@
 void mainMenuDisplay() {
     title_and_ver();
     formatTxt("Main App:", LIGHT_CYAN);
-    cout << "Usage: MCCA [--help][/?][--ver][--cond][--paint] [--no_color][--crop][--visualizer <image_format>]\n"
-        << "            [--root_dir <rootDir>][--algo <algo>][--matrix <matString>]\n"
+    cout << "Usage: MCCA [--help] [/?] [--ver] [--cond] [--paint] [--no_color] [--crop] [--visualizer <image_format>]\n"
+        << "            [--root_dir <rootDir>] [--algo <algo>] [--matrix <matString>]\n"
         << "Options:\n"
         << "  --algo       : Select graph algorithm: DFS, UF or BOTH.\n"
         << "  --paint      : Paint max connected color regions.\n"
@@ -36,7 +36,7 @@ void mainMenuDisplay() {
         << "  --visualizer : UnionFind Root visualizer. Limited by design choice to "
         << "small matrices with max(rows, cols) <= " << VIS_MAT_THR << ").\n"
         << "                 Graphviz must be installed and added to System Env. Path.\n"
-        << "                 image_format: svg(default), png, jpeg, jpg, gif, tif, tiff, bmp, fig, json, pdf.\n"
+        << "                 image_format:" << VIS_IMAGE_FORMATS << ".\n"
         << "  --crop       : Save max regions (inc. their original coordinates) into files.\n";
     formatTxt("  --help or /? : Display this help menu.", LIGHT_MAGENTA);
     formatTxt("  --cond       : Display conditions.", LIGHT_MAGENTA);
@@ -101,6 +101,8 @@ void handleArgs(int argc, char *argv[],
     unordered_set<string> standalone_flags = { "--help", "/?", "--paint", "--no_color", "--csv",
                                                "--crop", "filegen", "--cond",
                                                "--square", "--confirm", "--ovr", "--ver"};
+
+    const unordered_set<string> supportedImageFormats = { "svg", "png", "jpeg", "jpg", "gif", "tif", "tiff", "bmp", "fig", "json", "pdf" };
 
     // Parse the arguments and map them
     for (int i = 1; i < argc; ++i) {
@@ -196,8 +198,13 @@ void handleArgs(int argc, char *argv[],
                 handleError(ErrCode::MISSING_ARG_VALUE, arg);
                 cliErrHandler();
             }
+           
+            if (supportedImageFormats.find(value) != supportedImageFormats.end()) {
+                ufCG.imageFormat = value;
+            }
             else {
-                ufCG.imageFormat = strToLower(value); 
+                handleError(ErrCode::GRAPHVIZ_IMG_FORMAT_ERR, value, arg);
+                cliErrHandler();
             }
 
             if (!system("dot -V >nul 2>&1")) {
@@ -379,4 +386,4 @@ void title_and_ver() {
     ostringstream info;
     info << TITLE << VERSION << COPYRIGHT;
     formatTxt(info, LIGHT_CYAN);
-} 
+}

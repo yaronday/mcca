@@ -56,6 +56,9 @@ namespace MyCommon {
     //INVALID_RANGE handler
     void handleError(ErrCode code, int value, const string &arg, int min, int max);
 
+    //IMAGE_FORMAT_ERR handler
+    void handleError(ErrCode code, const string &value, const string &arg); 
+
     //ROW_LEN_MISMATCH handler
     void handleError(ErrCode code, int row);
 
