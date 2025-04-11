@@ -492,3 +492,5 @@ dkms.conf
 /static_binaries/
 
 /mcca_vs/
+
+/.idea/

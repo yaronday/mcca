@@ -37,7 +37,7 @@ void mainMenuDisplay() {
         << "small matrices with max(rows, cols) <= " << VIS_MAT_THR << ").\n"
         << "                 Graphviz must be installed and added to System Env. Path.\n"
         << "                 image_format:" << VIS_IMAGE_FORMATS << ".\n"
-        << "  --crop       : Save max regions (inc. their original coordinates) into files.\n";
+        << "  --crop       : Save max regions (inc. their original coordinates) into files. Ignored if painting is used.\n";
     formatTxt("  --help or /? : Display this help menu.", LIGHT_MAGENTA);
     formatTxt("  --cond       : Display conditions.", LIGHT_MAGENTA);
     formatTxt("  --ver        : Display title and version.\n", LIGHT_MAGENTA);
@@ -53,7 +53,7 @@ void mainMenuDisplay() {
         << "  --square            : Generate square matrix files, skipping column-related parameters.\n"
         << "  --confirm           : Automatically confirm saving files to disk.\n"
         << "  --ovr               : Enable overwrite.\n"
-        << "  --csv               : Save csv files (otherwise: txt, space separated).\n"
+        << "  --csv               : Save csv files (otherwise: txt, space-separated).\n"
         << "  --minrows <min_rows>: min_rows <= " << ROWS_MAX << ".\n"
         << "  --maxrows <max_rows>: max_rows <= " << ROWS_MAX << ".\n"
         << "  --row_inc <row_inc> : row_inc <= " << INC_MAX << ".\n"
