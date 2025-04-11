@@ -7,7 +7,7 @@ PROJ_NAME="mcca"
 EXE_MAC="${PROJ_NAME}_mac"
 TARGET_PATH="/mcca_local/mcca_$BUILD_DIR"
 STATIC_BINS="static_binaries"
-CONFIG_TYPE="Release"
+BUILD_TYPE="Release"
 
 WIN=$([[ "$OS" == $WINSTR ]] && echo "true" || echo "false")
 
@@ -20,8 +20,8 @@ fi
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --help|"/?")
-      echo "Usage: $0 [--config <config_type>] [--clean] [target_dir]"
-      echo "	config_types: Release; Debug; RelWithDebInfo; MinSizeRel"
+      echo "Usage: $0 [--build <build_type>] [--clean] [target_dir]"
+      echo "	build_types: Release; Debug; RelWithDebInfo; MinSizeRel"
       exit 0
       ;;
     --clean)
@@ -31,8 +31,8 @@ while [[ $# -gt 0 ]]; do
       rm -rf $BUILD_DIR
       exit 0
       ;;
-    --config)
-      CONFIG_TYPE="$2"
+    --build)
+      BUILD_TYPE="$2"
       shift
       shift
       ;;
@@ -56,7 +56,7 @@ cd $BUILD_DIR
 if [[ "$WIN" == "true" ]]; then
   cmake "../$PROJ_NAME"
 elif [[ "$OS" == "Darwin" ]]; then
-  cmake -DCMAKE_BUILD_TYPE="$CONFIG_TYPE" "../$PROJ_NAME"
+  cmake -DCMAKE_BUILD_TYPE="$BUILD_TYPE" "../$PROJ_NAME"
 else
   echo "Unsupported operating system: $OS"
   exit 1
@@ -67,7 +67,7 @@ if [[ "$?" -ne 0 ]]; then
   exit 1
 fi
 
-cmake --build . --config "$CONFIG_TYPE"
+cmake --build . --build "$BUILD_TYPE"
 
 if [[ "$?" -ne 0 ]]; then
   echo "Error: CMake build failed."
@@ -75,16 +75,16 @@ if [[ "$?" -ne 0 ]]; then
 fi
 
 if [[ "$WIN" == "true" ]]; then
-  if [[ -f "$CONFIG_TYPE/$PROJ_NAME.exe" ]]; then
+  if [[ -f "$BUILD_TYPE/$PROJ_NAME.exe" ]]; then
     mkdir -p "$(cygpath -u "$TARGET_DIR")"
-    cp "$CONFIG_TYPE/$PROJ_NAME.exe" "$(cygpath -u "$TARGET_DIR")/$PROJ_NAME.exe"
+    cp "$BUILD_TYPE/$PROJ_NAME.exe" "$(cygpath -u "$TARGET_DIR")/$PROJ_NAME.exe"
 
     if [[ ! -d "../$STATIC_BINS" ]]; then
       mkdir "../$STATIC_BINS"
     fi
-    cp "$CONFIG_TYPE/$PROJ_NAME.exe" "../$STATIC_BINS/$PROJ_NAME.exe"
+    cp "$BUILD_TYPE/$PROJ_NAME.exe" "../$STATIC_BINS/$PROJ_NAME.exe"
   else
-    echo "Error: $PROJ_NAME.exe not found in $CONFIG_TYPE directory."
+    echo "Error: $PROJ_NAME.exe not found in $BUILD_TYPE directory."
   fi
 elif [[ "$OS" == "Darwin" ]]; then
   if [[ -f "$PROJ_NAME" ]]; then
