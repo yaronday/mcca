@@ -52,13 +52,13 @@ MCCA is designed for a diverse group of users, including:
 
 ### Main Application
 
-Usage: 
+Usage Example: 
 
-       MCCA [--root_dir <rootDir>] [--paint] [--no_color] [--algo <algo>]
+      mcca  [--root_dir <rootDir>] [--paint] [--no_color] [--algo <algo>]
             [--crop] [--visualizer <image_format>] [--matrix <matString>] [--cond] [--help] [/?].
 
 Options:  
-**--algo [algo]**: Select the graph algorithm to use:
+**--algo <algo>**: Select the graph algorithm to use:
 
       UF: Union-Find algorithm. This option is set by default.
       DFS: Depth-First Search algorithm.
@@ -69,18 +69,20 @@ Options:
 **--no_color**: Paint in black and white using a unique symbol-map.  
 If neither **--paint** nor **--no_color** is specified, results will be saved under  root_dir directory.  
 
-**--root_dir [rootDir]**: Specify the root directory for processing matrix files.
+**--root_dir <rootDir>**: Specify the root directory for processing matrix files.
 
-**--matrix [matString]**: Specify matrices (C/C++ format) as a string.  
+**--matrix <matString>**: Specify matrices (C/C++ format) as a string.  
 Values allowed: integers within [1, 9]. 
-        
-        Example: **--matrix "{{1, 2, 1}, {2, 3, 2}, {1, 2, 1}}" --paint**  
+
+Usage Example: 
+
+      --matrix "{{1, 2, 1}, {2, 3, 2}, {1, 2, 1}}" --paint   
          
-**--visualizer**: Enable the Union-Find Root visualizer.  
+**--visualizer <image_format>**: Enable the Union-Find Root visualizer.  
 This feature is limited by design to small matrices (maximum dimensions of VIS_MAT_THR).  
 [Graphviz](https://graphviz.org/download/) must be installed and added to the system environment path for this feature to work.
 
-**--crop**: Only save the max connected color regions into files.
+**--crop**: Only save the max connected color regions into files. Ignored if painting is used. 
 
 **--help** or __/?__: Display the help menu.
 
@@ -92,16 +94,16 @@ This feature is limited by design to small matrices (maximum dimensions of VIS_M
 
 Usage Example:  
 
-        MCCA --root_dir C:/MCCA/Data/matrix_shapes --paint --algo dfs
-		mcca --paint --root_dir ../data/multicolor --visualizer svg
+      mcca --root_dir C:/MCCA/Data/matrix_shapes --paint --algo dfs
+      mcca --paint --root_dir ../data/multicolor --visualizer svg
 
 ### Matrix Files Generator:  
-Usage:   
+Usage Example:   
     
-        MCCA filegen [--sqmat] [--root_dir <rootDir>] [--confirm] [--ext <ext>]
-                     [--ovr] [--minrows <min_rows>] [--maxrows <max_rows>]
-                     [--row_inc <row_inc>] [--mincols <min_cols>] [--maxcols <max_cols>]
-                     [--col_inc <col_inc>] [--minv <min_v>] [--maxv <max_v>]
+      mcca filegen [--sqmat] [--root_dir <rootDir>] [--confirm] [--ext <ext>]
+                   [--ovr] [--minrows <min_rows>] [--maxrows <max_rows>]
+                   [--row_inc <row_inc>] [--mincols <min_cols>] [--maxcols <max_cols>]
+                   [--col_inc <col_inc>] [--minv <min_v>] [--maxv <max_v>]
 
 
 Options:   
@@ -120,11 +122,11 @@ Options:
 Notes:  
 **--sqmat** cannot be used with column parameters.
 
-Usage Examples:   
+Usage Example:   
 
-        MCCA filegen --maxrows 750 --maxcols 400 --inc_col 20  
-    
-        MCCA filegen --sqmat --minrows 4000 --maxrows 5000 --row_inc 500 --ext "csv"
+      mcca filegen --maxrows 750 --maxcols 400 --inc_col 20  
+      
+      mcca filegen --sqmat --minrows 4000 --maxrows 5000 --row_inc 500 --ext "csv"
 
 
 **Requirements**:  
