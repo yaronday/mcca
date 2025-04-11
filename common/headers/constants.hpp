@@ -21,7 +21,7 @@
 
 // title & version
 inline constexpr char COPYRIGHT[] = "\nCopyright (C) Yaron Dayan 2025\n";
-inline constexpr char VERSION[] = "v2.3.1";
+inline constexpr char VERSION[] = "v2.3.2";
 inline constexpr char TITLE[] = "Max Connected Colors Analyzer (MCCA) ";
 
 // misc
