@@ -138,7 +138,6 @@
     <ClInclude Include="..\common\headers\file_utils.hpp" />
     <ClInclude Include="..\common\headers\helpers.hpp" />
     <ClInclude Include="..\common\headers\matfile_handler.hpp" />
-    <ClInclude Include="..\common\headers\timer.hpp" />
     <ClInclude Include="..\mcca\headers\cli_utils.hpp" />
     <ClInclude Include="..\mcca\headers\color_grid.hpp" />
     <ClInclude Include="..\mcca\headers\main.hpp" />

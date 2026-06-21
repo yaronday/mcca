@@ -36,9 +36,6 @@
     <ClInclude Include="..\common\headers\matfile_handler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\headers\timer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\mcca\headers\cli_utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
