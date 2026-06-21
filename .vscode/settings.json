@@ -1,0 +1,4 @@
+{
+  "C_Cpp.clang_format_enabled": true,
+  "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: LLVM, SpaceBeforeReference: false }"
+}
