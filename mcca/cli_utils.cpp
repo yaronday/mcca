@@ -67,13 +67,13 @@ void mainMenuDisplay() {
     formatTxt("          mcca filegen --square --minrows 4000 --maxrows 5000 --row_inc 500 --csv \n", LIGHT_GREEN);
 }
 
-void handleArgs(int argc, char *argv[], 
-                string &matStr, 
-                string &algoChoice,
-                MatFileHandler &mfh,
-                bool &paint, bool &colors,
-                bool &crop, 
-                pair<bool, string> &visConfig) {
+void handleArgs(int argc, char *argv[],
+    string &matStr,
+    string &algoChoice,
+    MatFileHandler &mfh,
+    bool &paint, bool &colors,
+    bool &crop,
+    pair<bool, string> &visConfig) {
 
     int min_rows = DEFAULT_MIN_R;
     int max_rows = DEFAULT_MAX_R;
@@ -85,24 +85,24 @@ void handleArgs(int argc, char *argv[],
     int max_v = DEFAULT_MAX_V;
 
     bool filegen = DEFAULT_FILEGEN;
-  
-    bool algoSpecified = IS_ALGO_SPECIFIED; 
-    bool skip_algo_handler = SKIP_ALGO_HANDLER; 
+
+    bool algoSpecified = IS_ALGO_SPECIFIED;
+    bool skip_algo_handler = SKIP_ALGO_HANDLER;
 
     // Map to store flags and their values
     map<string, string> args_map;
 
-    unordered_set<string> fg_col_param_flags = { "--mincols", "--maxcols", "--col_inc" }; 
+    unordered_set<string> fg_col_param_flags = { "--mincols", "--maxcols", "--col_inc" };
 
     unordered_set<string> param_flags = { "--algo", "--root_dir", "--matrix", "--visualizer",
-                                          "--minrows", "--maxrows", "--row_inc", 
-                                          "--minv", "--maxv"};
+                                          "--minrows", "--maxrows", "--row_inc",
+                                          "--minv", "--maxv" };
 
     param_flags.insert(fg_col_param_flags.begin(), fg_col_param_flags.end());
-                                
+
     unordered_set<string> standalone_flags = { "--help", "/?", "--paint", "--no_color", "--csv",
                                                "--crop", "filegen", "--cond",
-                                               "--square", "--confirm", "--ovr", "--ver"};
+                                               "--square", "--confirm", "--ovr", "--ver" };
 
     static const auto supportedImageFormats = split2UnorderedSet(VIS_IMAGE_FORMATS);
 
@@ -116,7 +116,7 @@ void handleArgs(int argc, char *argv[],
         }
         else if (param_flags.contains(arg)) {
             if (i + 1 < argc && !isFlag(argv[i + 1])) {
-                args_map[arg] = argv[++i]; 
+                args_map[arg] = argv[++i];
             }
             else {
                 handleError(ErrCode::MISSING_ARG_VALUE, arg);
@@ -154,7 +154,7 @@ void handleArgs(int argc, char *argv[],
         }
 
         if (arg == "--confirm") {
-            mfh.confirm = true; 
+            mfh.confirm = true;
         }
 
         if (arg == "--no_color") {
@@ -163,10 +163,10 @@ void handleArgs(int argc, char *argv[],
         }
 
         if (arg == "--crop") {
-            crop = true; 
+            crop = true;
         }
 
-        if (arg == "--csv") { 
+        if (arg == "--csv") {
             mfh.txt = false;
         }
 
@@ -182,9 +182,9 @@ void handleArgs(int argc, char *argv[],
             if (value.empty()) {
                 handleError(ErrCode::MISSING_ARG_VALUE, arg);
                 cliErrHandler();
-            }       
+            }
             handleAlgoSelection(algoChoice, value);
-            algoSpecified = true;          
+            algoSpecified = true;
         }
 
         if (arg == "--matrix") {
@@ -200,7 +200,7 @@ void handleArgs(int argc, char *argv[],
                 handleError(ErrCode::MISSING_ARG_VALUE, arg);
                 cliErrHandler();
             }
-           
+
             if (supportedImageFormats.find(value) != supportedImageFormats.end()) {
                 visConfig.second = value;
             }
@@ -318,16 +318,16 @@ void handleArgs(int argc, char *argv[],
     }
 }
 
-void validateAndAssign(int &variable, const string &arg, int min_value, 
-                       int max_value, map<string, string> &args_map) {
+void validateAndAssign(int &variable, const string &arg, int min_value,
+    int max_value, map<string, string> &args_map) {
     auto it = args_map.find(arg);
     if (it != args_map.end() && !it->second.empty()) {
         string st = it->second;
         if (isNumeric(st)) {
             int value = stoi(st);
             if (value < min_value || value > max_value) {
-                handleError(ErrCode::INVALID_RANGE, value, 
-                            arg, min_value, max_value);
+                handleError(ErrCode::INVALID_RANGE, value,
+                    arg, min_value, max_value);
                 cliErrHandler();
             }
             variable = value;
@@ -358,7 +358,7 @@ bool isInvalidAlgoChoice(const string &algoChoice) {
 }
 
 void handleAlgoSelection(string &algo, const string &value) {
-     algo = strToUpper(value);
+    algo = strToUpper(value);
     if (isInvalidAlgoChoice(algo)) {
         handleError(ErrCode::INVALID_ALGO_SELECTION, ErrorContext());
         cliErrHandler();
@@ -373,7 +373,7 @@ void algoNotifier(const string &algo) {
 }
 
 void visualizerNotifier(const string &algo, bool &visEnable) {
-    if (visEnable){
+    if (visEnable) {
         if (algo != "UF" && algo != "BOTH") {
             // warn the user 
             formatTxt("Disabling Visualizer since UF was not included.\n", LIGHT_YELLOW);
