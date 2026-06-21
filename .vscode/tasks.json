@@ -1,0 +1,46 @@
+{   
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "C/C++: g++ build active file",
+            "type": "shell",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++20",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+        },
+        {
+            "type": "process",
+            "label": "C/C++: cl.exe RELEASE build active file",
+            "command": "cl.exe",
+            "args": [
+                "/O2",                             // Maximize speed optimizations
+                "/Oi",                             // Enable intrinsic functions
+                "/GL",                             // Whole program optimization (Link-time code generation)
+                "/D", "NDEBUG",                    // Disable assert() macros and debug-only code blocks
+                "/EHsc",                           // Synchronous exception handling model
+                "/std:c++latest",              
+                "/Fe:", "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${file}",
+                "/link",
+                "/LTCG"                            // Linker switch for Whole Program Optimization
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false                
+            }
+        }
+
+
+    ]
+}
