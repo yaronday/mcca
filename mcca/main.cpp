@@ -18,7 +18,6 @@
  */
 
 #include "headers/main.hpp"
-#include "../common/headers/timer.hpp"
 
 using namespace std;
 
